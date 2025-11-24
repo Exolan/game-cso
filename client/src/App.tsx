@@ -1,16 +1,33 @@
 import React, { useEffect, useState } from "react";
 import { socket } from "./socket";
+import {
+  BrowserRouter,
+  Route,
+  Routes,
+  Navigate,
+  useNavigate,
+} from "react-router-dom";
+import StartPage from "./components/StartPage/StartPage";
+import Game from "./components/Game/Game";
+import Cards from "./components/Cards/Cards";
+import Lobby from "./components/Lobby/Lobby";
 
-import styles from "./App.module.css";
-// import Game from "./components/Game/Game";
+const ProtectedRoute: React.FC<{
+  children: React.ReactNode;
+  isConnected: boolean;
+}> = ({ children, isConnected }) => {
+  return isConnected ? <>{children}</> : <Navigate to="/" replace />;
+};
 
-const App: React.FC = () => {
+const AppContent: React.FC = () => {
   const [isConnected, setIsConnected] = useState<boolean>(false);
+  const navigate = useNavigate();
 
-  function handleConnect() {
+  function handleConnect(): void {
     if (socket.connected) {
       setIsConnected(true);
       socket.emit("playerConnect");
+      navigate("/lobby");
     } else {
       socket.connect();
     }
@@ -20,10 +37,12 @@ const App: React.FC = () => {
     function handleConnectEvent() {
       setIsConnected(true);
       socket.emit("playerConnect");
+      navigate("/lobby");
     }
 
     function handleDisconnect() {
       setIsConnected(false);
+      navigate("/");
     }
 
     socket.on("connect", handleConnectEvent);
@@ -37,37 +56,44 @@ const App: React.FC = () => {
       socket.off("connect", handleConnectEvent);
       socket.off("disconnect", handleDisconnect);
     };
-  }, []);
-
-  if (isConnected) {
-    // return <Game socket={socket} />;
-  }
+  }, [navigate]);
 
   return (
-    <div className={styles.conteiner}>
-      <header className={styles.header}>
-        <img className={styles.img} src="./images/gerb.png" alt="" />
-        <img className={styles.img} src="./images/cso.png" alt="" />
-        <img className={styles.img} src="./images/tsur.png" alt="" />
-      </header>
-      <div className={styles.block}>
-        <div className={styles.textBlock}>
-          <h1 className={styles.title}>ФАБРИКА ПРОЦЕССОВ</h1>
-          <h3 className={styles.text}>Совершенствуй, играя!</h3>
-        </div>
-        <div className={styles.infoBlock}>
-          <h4 className={styles.infoText}>
-            <span className={styles.infoText_span}>P.S.</span> Помните: даже
-            маленькое улучшение лучше большого беспорядка
-          </h4>
-          <div className={styles.buttonBlock}>
-            <button className={styles.button} onClick={() => handleConnect()}>
-              <h4 className={styles.buttonText}>играть</h4>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+    <Routes>
+      <Route path="/" element={<StartPage handleConnect={handleConnect} />} />
+      <Route
+        path="/lobby"
+        element={
+          <ProtectedRoute isConnected={isConnected}>
+            <Lobby />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/cards"
+        element={
+          <ProtectedRoute isConnected={isConnected}>
+            <Cards />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/game"
+        element={
+          <ProtectedRoute isConnected={isConnected}>
+            <Game />
+          </ProtectedRoute>
+        }
+      />
+    </Routes>
+  );
+};
+
+const App: React.FC = () => {
+  return (
+    <BrowserRouter>
+      <AppContent />
+    </BrowserRouter>
   );
 };
 
