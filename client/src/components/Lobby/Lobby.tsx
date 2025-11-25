@@ -1,7 +1,70 @@
-import React from "react";
+import React, { useEffect, useState, useMemo } from "react";
+import { socket } from "../../socket";
+import PlayerCard from "../PlayerCard/PlayerCard";
+
+import styles from "./styles.module.css";
+import { LobbyPlayer } from "../../types";
 
 const Lobby: React.FC = () => {
-  return <div>Лобби</div>;
+  const [players, setPlayers] = useState<LobbyPlayer[]>([]);
+  const [isReady, setIsReady] = useState<boolean>(false);
+
+  useEffect(() => {
+    const onLobbyUpdate = (players: LobbyPlayer[]): void => setPlayers(players);
+
+    socket.on("lobbyUpdate", onLobbyUpdate);
+    socket.emit("getLobby");
+
+    return () => {
+      socket.off("lobbyUpdate", onLobbyUpdate);
+    };
+  }, [players]);
+
+  return (
+    <div className={styles.conteiner}>
+      <header className={styles.header}>
+        <div className={styles.headerTitle}>
+          <h4 className={styles.title}>ФАБРИКА ПРОЦЕССОВ</h4>
+        </div>
+        <div className={styles.headerCounter}>
+          <h2 className={styles.counter}>
+            Игроков: {players.length} из {Math.max(players.length, 4)}
+          </h2>
+        </div>
+      </header>
+      <div className={styles.block}>
+        <div className={styles.players}>
+          {Array.from({ length: 10 }).map((_, index) => {
+            const player = players[index];
+
+            if (!player) {
+              return <div className={styles.socket} key={index}></div>;
+            }
+
+            return (
+              <div className={styles.socket} key={player.playerId}>
+                <PlayerCard
+                  playerId={player.playerId}
+                  isReady={player.isReady}
+                />
+              </div>
+            );
+          })}
+        </div>
+        {/* <div className={styles.footer}>
+          {isReady ? (
+            <div className={styles.waitingBlock}>
+              <h4 className={styles.waitingText}>ожидайте остальных игроков</h4>
+            </div>
+          ) : (
+            <button onClick={onReady} className={styles.button}>
+              <h4 className={styles.buttonText}>готов</h4>
+            </button>
+          )}
+        </div> */}
+      </div>
+    </div>
+  );
 };
 
 export default Lobby;

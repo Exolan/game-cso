@@ -18,27 +18,20 @@ export class Game {
     });
   }
 
-  //   public getAllPlayers(): {} {
-  //     return this.players.entries();
-  //   }
+  public getAllPlayers(): {} {
+    return Array.from(this.players, ([playerSocket, playerData]) => ({
+      playerSocket,
+      ...playerData,
+    }));
+  }
 
-  //   public getPlayerBySocket(socket: string): Player | null {
-  //     for (const player of this.players) {
-  //       if (player.socket === socket) {
-  //         return player;
-  //       }
-  //     }
+  public resetAllPlayersIsReady(): void {
+    this.players.forEach((playerData) => {
+      playerData.isReady = false;
+    });
+  }
 
-  //     return null;
-  //   }
-
-  //   public resetAllPlayersIsReady(): void {
-  //     for (const player of this.players) {
-  //       player.isReady = false;
-  //     }
-  //   }
-
-  //   public deletePlayer(playerSocket: string): void {
-  //     const player = this.getPlayerBySocket(playerSocket);
-  //   }
+  public deletePlayer(playerSocket: string): void {
+    this.players.delete(playerSocket);
+  }
 }

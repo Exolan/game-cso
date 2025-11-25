@@ -1,4 +1,4 @@
-export class Logger {
+export default class Logger {
   static info(message: string, meta?: any): void {
     const timestamp = new Date().toISOString();
     console.log(`[${timestamp}] INFO: ${message}`, meta || "");

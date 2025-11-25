@@ -11,6 +11,7 @@ import StartPage from "./components/StartPage/StartPage";
 import Game from "./components/Game/Game";
 import Cards from "./components/Cards/Cards";
 import Lobby from "./components/Lobby/Lobby";
+import { LobbyPlayer } from "./types";
 
 const ProtectedRoute: React.FC<{
   children: React.ReactNode;
@@ -36,8 +37,8 @@ const AppContent: React.FC = () => {
   useEffect(() => {
     function handleConnectEvent() {
       setIsConnected(true);
-      socket.emit("playerConnect");
       navigate("/lobby");
+      socket.emit("playerConnect");
     }
 
     function handleDisconnect() {

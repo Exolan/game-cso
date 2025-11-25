@@ -7,6 +7,9 @@ var express_1 = __importDefault(require("express"));
 var path_1 = __importDefault(require("path"));
 var http_1 = require("http");
 var socket_io_1 = require("socket.io");
+var os_1 = require("os");
+var Game_1 = require("./models/Game");
+var SocketHandlers_1 = require("./handlers/SocketHandlers");
 var app = (0, express_1.default)();
 var PORT = process.env.PORT || 3001;
 var httpServer = (0, http_1.createServer)(app);
@@ -16,6 +19,27 @@ var io = new socket_io_1.Server(httpServer, {
         methods: ["GET", "POST"],
     },
 });
+var game = new Game_1.Game();
+var socketHandlers = new SocketHandlers_1.SocketHandlers(io, game);
+function getLocalIP() {
+    var nets = (0, os_1.networkInterfaces)();
+    for (var _i = 0, _a = Object.keys(nets); _i < _a.length; _i++) {
+        var interfaceName = _a[_i];
+        var interfaceData = nets[interfaceName];
+        if (!interfaceData)
+            continue;
+        for (var _b = 0, interfaceData_1 = interfaceData; _b < interfaceData_1.length; _b++) {
+            var net = interfaceData_1[_b];
+            if (net.family === "IPv4" && !net.internal) {
+                console.log("Адрес для подключения: ", net.address);
+                return;
+            }
+        }
+    }
+    console.log("Не удалось найти локальный IP адрес");
+    return;
+}
+getLocalIP();
 app.use(express_1.default.json());
 app.use(express_1.default.static(path_1.default.join(__dirname, "../client/build")));
 app.get("*", function (req, res) {
@@ -27,7 +51,7 @@ app.get("/", function (req, res) {
     });
 });
 io.on("connection", function (socket) {
-    console.log("\u0418\u0433\u0440\u043E\u043A \u043F\u043E\u0434\u043A\u043B\u044E\u0447\u0438\u043B\u0441\u044F: ".concat(socket.id));
+    socketHandlers.initAllHandlers(socket);
 });
 process.on("SIGINT", function () {
     console.log("\nВыключение сервера...");

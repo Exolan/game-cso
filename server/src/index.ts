@@ -2,6 +2,9 @@ import express from "express";
 import path from "path";
 import { createServer } from "http";
 import { Server } from "socket.io";
+import { networkInterfaces } from "os";
+import { Game } from "./models/Game";
+import { SocketHandlers } from "./handlers/SocketHandlers";
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -12,6 +15,30 @@ const io = new Server(httpServer, {
     methods: ["GET", "POST"],
   },
 });
+const game = new Game();
+const socketHandlers = new SocketHandlers(io, game);
+
+function getLocalIP(): void {
+  const nets = networkInterfaces();
+
+  for (const interfaceName of Object.keys(nets)) {
+    const interfaceData = nets[interfaceName];
+    if (!interfaceData) continue;
+
+    for (const net of interfaceData) {
+      if (net.family === "IPv4" && !net.internal) {
+        console.log("Адрес для подключения: ", net.address);
+
+        return;
+      }
+    }
+  }
+
+  console.log("Не удалось найти локальный IP адрес");
+  return;
+}
+
+getLocalIP();
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "../client/build")));
@@ -26,7 +53,7 @@ app.get("/", (req, res) => {
 });
 
 io.on("connection", (socket) => {
-  console.log(`Игрок подключился: ${socket.id}`);
+  socketHandlers.initAllHandlers(socket);
 });
 
 process.on("SIGINT", () => {

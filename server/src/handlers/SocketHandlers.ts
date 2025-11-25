@@ -1,6 +1,6 @@
 import { Server, Socket } from "socket.io";
 import { Game } from "src/models/Game";
-import { Logger } from "src/utils/logger";
+import Logger from "../utils/logger";
 
 export class SocketHandlers {
   private readonly io: Server;
@@ -11,58 +11,61 @@ export class SocketHandlers {
     this.game = game;
   }
 
-  // public initAllHandlers(socket: Socket): void {
-  //   this.onPlayerConnect(socket);
-  // }
+  public initAllHandlers(socket: Socket): void {
+    this.onPlayerConnect(socket);
+    this.onPlayerDisconnect(socket);
+    this.onGetLobby(socket);
+  }
 
-  // private emitLobbyUpdate(): void {
-  //   this.io.emit("lobbyUpdate", this.game.getAllPlayers());
-  // }
+  private emitLobbyUpdate(): void {
+    this.io.emit("lobbyUpdate", this.game.getAllPlayers());
+  }
 
-  // private onPlayerConnect(socket: Socket): void {
-  //   socket.on("playerConnect", () => {
-  //     try {
-  //       // if (this.game.getPlayerBySocket(socket.id)) {
-  //       //   Logger.warn(
-  //       //     "Игрок уже подключился",
-  //       //     // this.game.getPlayerBySocket(socket.id)
-  //       //   );
-  //       //   return;
-  //       // }
+  private onGetLobby(socket: Socket): void {
+    socket.on("getLobby", () => this.emitLobbyUpdate());
+  }
 
-  //       this.game.craetePlayer(socket.id);
+  private onPlayerConnect(socket: Socket): void {
+    socket.on("playerConnect", () => {
+      try {
+        const player = this.game.players.get(socket.id);
+        if (player) {
+          Logger.warn("Игрок уже подключился", player);
+          return;
+        }
 
-  //       Logger.info(
-  //         "Игрок подключился",
-  //         // this.game.getPlayerBySocket(socket.id)
-  //       );
+        this.game.craetePlayer(socket.id);
 
-  //       this.emitLobbyUpdate();
-  //     } catch (error) {
-  //       Logger.error("Ошибка подключения игрока", error, {
-  //         socketId: socket.id,
-  //       });
-  //     }
-  //   });
-  // }
+        Logger.info("Игрок подключился", player);
 
-  // private onPlayerDisconnect(socket: Socket): void {
-  //   socket.on("disconnect", (reason: string) => {
-  //     try {
-  //       const player = this.game.getPlayerBySocket(socket.id);
+        this.emitLobbyUpdate();
+      } catch (error) {
+        Logger.error("Ошибка подключения игрока", error, {
+          socketId: socket.id,
+        });
+      }
+    });
+  }
 
-  //       if (!player) {
-  //         Logger.warn("Игрока не существует!");
-  //         return;
-  //       }
+  private onPlayerDisconnect(socket: Socket): void {
+    socket.on("disconnect", (reason: string) => {
+      try {
+        const player = this.game.players.get(socket.id);
 
-  //       if (this.game.gamePhase !== "game") {
-  //         this.game.resetAllPlayersIsReady();
-  //         this.io.emit("backToLobby");
-  //       }
+        if (!player) {
+          Logger.warn("Игрока не существует!");
+          return;
+        }
 
-  //       Logger.info("Игрок отключился", { socketId: socket.id, reason });
-  //     } catch (error) {}
-  //   });
-  // }
+        if (this.game.gamePhase !== "game") {
+          this.game.resetAllPlayersIsReady();
+          this.io.emit("backToLobby");
+        }
+
+        Logger.info("Игрок отключился", { socketId: socket.id, reason });
+        this.game.deletePlayer(socket.id);
+        this.emitLobbyUpdate();
+      } catch (error) {}
+    });
+  }
 }
