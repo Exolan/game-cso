@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState } from "react";
 import { socket } from "../../socket";
 import PlayerCard from "../PlayerCard/PlayerCard";
 
@@ -8,6 +8,11 @@ import { LobbyPlayer } from "../../types";
 const Lobby: React.FC = () => {
   const [players, setPlayers] = useState<LobbyPlayer[]>([]);
   const [isReady, setIsReady] = useState<boolean>(false);
+
+  const onReady = () => {
+    setIsReady(true);
+    socket.emit("playerIsReady");
+  };
 
   useEffect(() => {
     const onLobbyUpdate = (players: LobbyPlayer[]): void => setPlayers(players);
@@ -51,7 +56,7 @@ const Lobby: React.FC = () => {
             );
           })}
         </div>
-        {/* <div className={styles.footer}>
+        <div className={styles.footer}>
           {isReady ? (
             <div className={styles.waitingBlock}>
               <h4 className={styles.waitingText}>ожидайте остальных игроков</h4>
@@ -61,7 +66,7 @@ const Lobby: React.FC = () => {
               <h4 className={styles.buttonText}>готов</h4>
             </button>
           )}
-        </div> */}
+        </div>
       </div>
     </div>
   );

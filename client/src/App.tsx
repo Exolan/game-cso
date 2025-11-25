@@ -11,7 +11,6 @@ import StartPage from "./components/StartPage/StartPage";
 import Game from "./components/Game/Game";
 import Cards from "./components/Cards/Cards";
 import Lobby from "./components/Lobby/Lobby";
-import { LobbyPlayer } from "./types";
 
 const ProtectedRoute: React.FC<{
   children: React.ReactNode;
@@ -22,32 +21,37 @@ const ProtectedRoute: React.FC<{
 
 const AppContent: React.FC = () => {
   const [isConnected, setIsConnected] = useState<boolean>(false);
+  const [gamePhase, setGamePhase] = useState<string>("");
   const navigate = useNavigate();
 
   function handleConnect(): void {
     if (socket.connected) {
       setIsConnected(true);
       socket.emit("playerConnect");
-      navigate("/lobby");
     } else {
       socket.connect();
     }
   }
 
   useEffect(() => {
-    function handleConnectEvent() {
+    function handleConnectEvent(): void {
       setIsConnected(true);
-      navigate("/lobby");
       socket.emit("playerConnect");
     }
 
-    function handleDisconnect() {
+    function handleDisconnect(): void {
       setIsConnected(false);
       navigate("/");
     }
 
+    function handleChangeGamePhase(newGamePhase: string): void {
+      setGamePhase(newGamePhase);
+      navigate("/" + newGamePhase);
+    }
+
     socket.on("connect", handleConnectEvent);
     socket.on("disconnect", handleDisconnect);
+    socket.on("changeGamePhase", handleChangeGamePhase);
 
     if (socket.connected) {
       handleConnectEvent();
@@ -56,8 +60,9 @@ const AppContent: React.FC = () => {
     return () => {
       socket.off("connect", handleConnectEvent);
       socket.off("disconnect", handleDisconnect);
+      socket.off("changeGamePhase", handleChangeGamePhase);
     };
-  }, [navigate]);
+  }, [gamePhase, navigate]);
 
   return (
     <Routes>

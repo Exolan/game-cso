@@ -16,6 +16,8 @@ var Game = /** @class */ (function () {
     function Game() {
         this.players = new Map();
         this.gamePhase = "lobby";
+        this.minPlayers = 4;
+        this.maxPlayers = 10;
     }
     Game.prototype.craetePlayer = function (playerSocket) {
         var playerId = this.players.size;
@@ -24,13 +26,37 @@ var Game = /** @class */ (function () {
             isReady: false,
         });
     };
+    Game.prototype.setPlayerIsReady = function (playerSocket) {
+        var player = this.players.get(playerSocket);
+        if (!player) {
+            return;
+        }
+        player.isReady = true;
+    };
+    Game.prototype.allPlayersIsReady = function () {
+        var countPlayers = this.players.size;
+        if (countPlayers < this.minPlayers) {
+            return false;
+        }
+        var countReadyPlayers = 0;
+        this.players.forEach(function (player) {
+            if (player.isReady) {
+                countReadyPlayers += 1;
+            }
+        });
+        if (countReadyPlayers === countPlayers) {
+            this.gamePhase = "cards";
+            return true;
+        }
+        return false;
+    };
     Game.prototype.getAllPlayers = function () {
         return Array.from(this.players, function (_a) {
             var playerSocket = _a[0], playerData = _a[1];
             return (__assign({ playerSocket: playerSocket }, playerData));
         });
     };
-    Game.prototype.resetAllPlayersIsReady = function () {
+    Game.prototype.resetPlayersIsReady = function () {
         this.players.forEach(function (playerData) {
             playerData.isReady = false;
         });

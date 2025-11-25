@@ -15,6 +15,7 @@ export class SocketHandlers {
     this.onPlayerConnect(socket);
     this.onPlayerDisconnect(socket);
     this.onGetLobby(socket);
+    this.onPlayerIsReady(socket);
   }
 
   private emitLobbyUpdate(): void {
@@ -30,17 +31,46 @@ export class SocketHandlers {
       try {
         const player = this.game.players.get(socket.id);
         if (player) {
-          Logger.warn("Игрок уже подключился", player);
           return;
         }
 
         this.game.craetePlayer(socket.id);
 
-        Logger.info("Игрок подключился", player);
+        Logger.info("Игрок подключился", { socketId: socket.id });
 
+        socket.emit("changeGamePhase", this.game.gamePhase);
         this.emitLobbyUpdate();
       } catch (error) {
         Logger.error("Ошибка подключения игрока", error, {
+          socketId: socket.id,
+        });
+      }
+    });
+  }
+
+  private onPlayerIsReady(socket: Socket): void {
+    socket.on("playerIsReady", () => {
+      try {
+        const player = this.game.players.get(socket.id);
+        if (!player) {
+          return;
+        }
+
+        if (player.isReady) {
+          return;
+        }
+
+        player.isReady = true;
+
+        Logger.info(`Игрок ${player.playerId} готов`);
+
+        this.emitLobbyUpdate();
+
+        if (this.game.allPlayersIsReady()) {
+          this.io.emit("changeGamePhase", this.game.gamePhase);
+        }
+      } catch (error) {
+        Logger.error("Ошибка готовности игрока", error, {
           socketId: socket.id,
         });
       }
@@ -58,7 +88,7 @@ export class SocketHandlers {
         }
 
         if (this.game.gamePhase !== "game") {
-          this.game.resetAllPlayersIsReady();
+          this.game.resetPlayersIsReady();
           this.io.emit("backToLobby");
         }
 
