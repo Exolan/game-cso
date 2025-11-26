@@ -1,16 +1,29 @@
-import { GamePhase, Player } from "src/types/types";
+import { GamePhase, GameRole, Player } from "src/types/types";
+import { roles } from "../config/roles";
 
 export class Game {
   public players: Map<string, Player>;
   public gamePhase: GamePhase;
   public minPlayers: number;
   public maxPlayers: number;
+  public roles: GameRole[];
 
   constructor() {
     this.players = new Map();
     this.gamePhase = "lobby";
     this.minPlayers = 4;
     this.maxPlayers = 10;
+    this.roles = [];
+  }
+
+  private initializeRoles(countPlayers: number): void {
+    if (!roles) {
+      return;
+    }
+
+    for (let i = 0; i < countPlayers; i++) {
+      this.roles.push(roles[i]);
+    }
   }
 
   public craetePlayer(playerSocket: string): void {
@@ -32,6 +45,24 @@ export class Game {
     player.isReady = true;
   }
 
+  public setPlayerRole(playerSocket: string, roleId: number): boolean {
+    const player = this.players.get(playerSocket);
+
+    if (!player) {
+      return false;
+    }
+
+    for (const role of this.roles) {
+      if (role.roleId === roleId) {
+        role.isSelected = true;
+        player.playerRole = role;
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   public allPlayersIsReady(): boolean {
     const countPlayers = this.players.size;
 
@@ -48,6 +79,7 @@ export class Game {
     });
 
     if (countReadyPlayers === countPlayers) {
+      this.initializeRoles(countPlayers);
       this.gamePhase = "cards";
       return true;
     }
@@ -55,11 +87,15 @@ export class Game {
     return false;
   }
 
-  public getAllPlayers(): {} {
+  public getAllPlayers(): Array<string | Player> {
     return Array.from(this.players, ([playerSocket, playerData]) => ({
       playerSocket,
       ...playerData,
     }));
+  }
+
+  public getAllRoles(): GameRole[] {
+    return this.roles;
   }
 
   public resetPlayersIsReady(): void {

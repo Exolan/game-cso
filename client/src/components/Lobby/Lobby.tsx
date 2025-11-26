@@ -23,7 +23,7 @@ const Lobby: React.FC = () => {
     return () => {
       socket.off("lobbyUpdate", onLobbyUpdate);
     };
-  }, [players]);
+  }, []);
 
   return (
     <div className={styles.conteiner}>

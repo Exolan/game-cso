@@ -15,13 +15,41 @@ var SocketHandlers = /** @class */ (function () {
         this.onPlayerDisconnect(socket);
         this.onGetLobby(socket);
         this.onPlayerIsReady(socket);
+        this.onGetRoles(socket);
+        this.onSelectRole(socket);
     };
     SocketHandlers.prototype.emitLobbyUpdate = function () {
         this.io.emit("lobbyUpdate", this.game.getAllPlayers());
     };
+    SocketHandlers.prototype.emitRolesUpdate = function () {
+        this.io.emit("rolesUpdate", this.game.getAllRoles());
+    };
+    SocketHandlers.prototype.emitSendRoles = function (socket) {
+        logger_1.default.info("\u041E\u0442\u043F\u0440\u0430\u0432\u043A\u0430 \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044E ".concat(socket.id, " \u0441\u043F\u0438\u0441\u043E\u043A \u0440\u043E\u043B\u0435\u0439"));
+        socket.emit("sendRoles", this.game.getAllRoles());
+    };
+    SocketHandlers.prototype.onGetRoles = function (socket) {
+        var _this = this;
+        socket.on("getRoles", function () { return _this.emitSendRoles(socket); });
+    };
     SocketHandlers.prototype.onGetLobby = function (socket) {
         var _this = this;
         socket.on("getLobby", function () { return _this.emitLobbyUpdate(); });
+    };
+    SocketHandlers.prototype.onSelectRole = function (socket) {
+        var _this = this;
+        socket.on("selectRole", function (roleId) {
+            try {
+                if (!_this.game.setPlayerRole(socket.id, roleId)) {
+                    return;
+                }
+                logger_1.default.info("\u0418\u0433\u0440\u043E\u043A ".concat(socket.id, " \u0432\u044B\u0431\u0440\u0430\u043B \u0440\u043E\u043B\u044C \"").concat(roleId, "\""));
+                _this.emitRolesUpdate();
+            }
+            catch (error) {
+                logger_1.default.error("Ошибка выбора роли", error, { socketId: socket.id });
+            }
+        });
     };
     SocketHandlers.prototype.onPlayerConnect = function (socket) {
         var _this = this;
@@ -58,6 +86,7 @@ var SocketHandlers = /** @class */ (function () {
                 logger_1.default.info("\u0418\u0433\u0440\u043E\u043A ".concat(player.playerId, " \u0433\u043E\u0442\u043E\u0432"));
                 _this.emitLobbyUpdate();
                 if (_this.game.allPlayersIsReady()) {
+                    logger_1.default.info("Все игроки подключились. Переход в выбор карт", _this.game.players);
                     _this.io.emit("changeGamePhase", _this.game.gamePhase);
                 }
             }

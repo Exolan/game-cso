@@ -21,7 +21,6 @@ const ProtectedRoute: React.FC<{
 
 const AppContent: React.FC = () => {
   const [isConnected, setIsConnected] = useState<boolean>(false);
-  const [gamePhase, setGamePhase] = useState<string>("");
   const navigate = useNavigate();
 
   function handleConnect(): void {
@@ -45,7 +44,7 @@ const AppContent: React.FC = () => {
     }
 
     function handleChangeGamePhase(newGamePhase: string): void {
-      setGamePhase(newGamePhase);
+      console.log("Новая игровая фаза", newGamePhase);
       navigate("/" + newGamePhase);
     }
 
@@ -62,7 +61,7 @@ const AppContent: React.FC = () => {
       socket.off("disconnect", handleDisconnect);
       socket.off("changeGamePhase", handleChangeGamePhase);
     };
-  }, [gamePhase, navigate]);
+  }, [navigate]);
 
   return (
     <Routes>

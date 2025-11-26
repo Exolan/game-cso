@@ -16,14 +16,44 @@ export class SocketHandlers {
     this.onPlayerDisconnect(socket);
     this.onGetLobby(socket);
     this.onPlayerIsReady(socket);
+    this.onGetRoles(socket);
+    this.onSelectRole(socket);
   }
 
   private emitLobbyUpdate(): void {
     this.io.emit("lobbyUpdate", this.game.getAllPlayers());
   }
 
+  private emitRolesUpdate(): void {
+    this.io.emit("rolesUpdate", this.game.getAllRoles());
+  }
+
+  private emitSendRoles(socket: Socket): void {
+    Logger.info(`Отправка пользователю ${socket.id} список ролей`);
+    socket.emit("sendRoles", this.game.getAllRoles());
+  }
+
+  private onGetRoles(socket: Socket): void {
+    socket.on("getRoles", () => this.emitSendRoles(socket));
+  }
+
   private onGetLobby(socket: Socket): void {
     socket.on("getLobby", () => this.emitLobbyUpdate());
+  }
+
+  private onSelectRole(socket: Socket): void {
+    socket.on("selectRole", (roleId: number) => {
+      try {
+        if (!this.game.setPlayerRole(socket.id, roleId)) {
+          return;
+        }
+
+        Logger.info(`Игрок ${socket.id} выбрал роль "${roleId}"`);
+        this.emitRolesUpdate();
+      } catch (error) {
+        Logger.error("Ошибка выбора роли", error, { socketId: socket.id });
+      }
+    });
   }
 
   private onPlayerConnect(socket: Socket): void {
@@ -67,6 +97,10 @@ export class SocketHandlers {
         this.emitLobbyUpdate();
 
         if (this.game.allPlayersIsReady()) {
+          Logger.info(
+            "Все игроки подключились. Переход в выбор карт",
+            this.game.players
+          );
           this.io.emit("changeGamePhase", this.game.gamePhase);
         }
       } catch (error) {

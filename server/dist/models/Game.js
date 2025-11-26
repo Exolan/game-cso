@@ -12,13 +12,23 @@ var __assign = (this && this.__assign) || function () {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Game = void 0;
+var roles_1 = require("../config/roles");
 var Game = /** @class */ (function () {
     function Game() {
         this.players = new Map();
         this.gamePhase = "lobby";
         this.minPlayers = 4;
         this.maxPlayers = 10;
+        this.roles = [];
     }
+    Game.prototype.initializeRoles = function (countPlayers) {
+        if (!roles_1.roles) {
+            return;
+        }
+        for (var i = 0; i < countPlayers; i++) {
+            this.roles.push(roles_1.roles[i]);
+        }
+    };
     Game.prototype.craetePlayer = function (playerSocket) {
         var playerId = this.players.size;
         this.players.set(playerSocket, {
@@ -33,6 +43,21 @@ var Game = /** @class */ (function () {
         }
         player.isReady = true;
     };
+    Game.prototype.setPlayerRole = function (playerSocket, roleId) {
+        var player = this.players.get(playerSocket);
+        if (!player) {
+            return false;
+        }
+        for (var _i = 0, _a = this.roles; _i < _a.length; _i++) {
+            var role = _a[_i];
+            if (role.roleId === roleId) {
+                role.isSelected = true;
+                player.playerRole = role;
+                return true;
+            }
+        }
+        return false;
+    };
     Game.prototype.allPlayersIsReady = function () {
         var countPlayers = this.players.size;
         if (countPlayers < this.minPlayers) {
@@ -45,6 +70,7 @@ var Game = /** @class */ (function () {
             }
         });
         if (countReadyPlayers === countPlayers) {
+            this.initializeRoles(countPlayers);
             this.gamePhase = "cards";
             return true;
         }
@@ -55,6 +81,9 @@ var Game = /** @class */ (function () {
             var playerSocket = _a[0], playerData = _a[1];
             return (__assign({ playerSocket: playerSocket }, playerData));
         });
+    };
+    Game.prototype.getAllRoles = function () {
+        return this.roles;
     };
     Game.prototype.resetPlayersIsReady = function () {
         this.players.forEach(function (playerData) {
