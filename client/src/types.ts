@@ -25,3 +25,10 @@ export interface RoleButton {
   buttonText: string;
   isActive: boolean;
 }
+
+export interface GameEvent {
+  eventId: number;
+  eventType: "call" | "message" | "dialog" | "minigame";
+  eventData: any;
+  isActive: boolean;
+}
