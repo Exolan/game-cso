@@ -18,6 +18,7 @@ export class SocketHandlers {
     this.onPlayerIsReady(socket);
     this.onGetRoles(socket);
     this.onSelectRole(socket);
+    this.onGetPlayerData(socket);
   }
 
   private emitLobbyUpdate(): void {
@@ -57,6 +58,25 @@ export class SocketHandlers {
         }
       } catch (error) {
         Logger.error("Ошибка выбора роли", error, { socketId: socket.id });
+      }
+    });
+  }
+
+  private onGetPlayerData(socket: Socket): void {
+    socket.on("getPlayerData", () => {
+      try {
+        const playerData = this.game.getPlayerData(socket.id);
+        if (playerData === null) {
+          return;
+        }
+
+        Logger.info(`Отправка данных пользователю ${socket.id}`);
+
+        socket.emit("sendPlayerData", playerData);
+      } catch (error) {
+        Logger.error("Ошибка отправки данных пользователю", error, {
+          socketId: socket.id,
+        });
       }
     });
   }

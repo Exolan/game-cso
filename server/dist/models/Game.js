@@ -97,6 +97,13 @@ var Game = /** @class */ (function () {
             return (__assign({ playerSocket: playerSocket }, playerData));
         });
     };
+    Game.prototype.getPlayerData = function (socketId) {
+        var player = this.players.get(socketId);
+        if (player) {
+            return __assign({ socketId: socketId }, player);
+        }
+        return null;
+    };
     Game.prototype.getAllRoles = function () {
         return this.roles;
     };

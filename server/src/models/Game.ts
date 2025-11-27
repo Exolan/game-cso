@@ -112,6 +112,18 @@ export class Game {
     }));
   }
 
+  public getPlayerData(
+    socketId: string
+  ): ({ socketId: string } & Player) | null {
+    const player = this.players.get(socketId);
+
+    if (player) {
+      return { socketId, ...player };
+    }
+
+    return null;
+  }
+
   public getAllRoles(): GameRole[] {
     return this.roles;
   }

@@ -17,6 +17,7 @@ var SocketHandlers = /** @class */ (function () {
         this.onPlayerIsReady(socket);
         this.onGetRoles(socket);
         this.onSelectRole(socket);
+        this.onGetPlayerData(socket);
     };
     SocketHandlers.prototype.emitLobbyUpdate = function () {
         this.io.emit("lobbyUpdate", this.game.getAllPlayers());
@@ -52,6 +53,24 @@ var SocketHandlers = /** @class */ (function () {
             }
             catch (error) {
                 logger_1.default.error("Ошибка выбора роли", error, { socketId: socket.id });
+            }
+        });
+    };
+    SocketHandlers.prototype.onGetPlayerData = function (socket) {
+        var _this = this;
+        socket.on("getPlayerData", function () {
+            try {
+                var playerData = _this.game.getPlayerData(socket.id);
+                if (playerData === null) {
+                    return;
+                }
+                logger_1.default.info("\u041E\u0442\u043F\u0440\u0430\u0432\u043A\u0430 \u0434\u0430\u043D\u043D\u044B\u0445 \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044E ".concat(socket.id));
+                socket.emit("sendPlayerData", playerData);
+            }
+            catch (error) {
+                logger_1.default.error("Ошибка отправки данных пользователю", error, {
+                    socketId: socket.id,
+                });
             }
         });
     };
