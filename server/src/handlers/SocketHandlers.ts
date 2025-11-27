@@ -50,6 +50,11 @@ export class SocketHandlers {
 
         Logger.info(`Игрок ${socket.id} выбрал роль "${roleId}"`);
         this.emitRolesUpdate();
+
+        if (this.game.allCardsIsSelected()) {
+          Logger.info("Все карты выбраны. Переход к игре", this.game.players);
+          this.io.emit("changeGamePhase", this.game.gamePhase);
+        }
       } catch (error) {
         Logger.error("Ошибка выбора роли", error, { socketId: socket.id });
       }

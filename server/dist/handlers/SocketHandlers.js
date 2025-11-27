@@ -45,6 +45,10 @@ var SocketHandlers = /** @class */ (function () {
                 }
                 logger_1.default.info("\u0418\u0433\u0440\u043E\u043A ".concat(socket.id, " \u0432\u044B\u0431\u0440\u0430\u043B \u0440\u043E\u043B\u044C \"").concat(roleId, "\""));
                 _this.emitRolesUpdate();
+                if (_this.game.allCardsIsSelected()) {
+                    logger_1.default.info("Все карты выбраны. Переход к игре", _this.game.players);
+                    _this.io.emit("changeGamePhase", _this.game.gamePhase);
+                }
             }
             catch (error) {
                 logger_1.default.error("Ошибка выбора роли", error, { socketId: socket.id });

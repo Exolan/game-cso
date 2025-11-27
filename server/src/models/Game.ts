@@ -87,6 +87,24 @@ export class Game {
     return false;
   }
 
+  public allCardsIsSelected(): boolean {
+    const rolesCount = this.roles.length;
+    let selectedRolesCount = 0;
+
+    for (const role of this.roles) {
+      if (role.isSelected === true) {
+        selectedRolesCount++;
+      }
+    }
+
+    if (rolesCount === selectedRolesCount) {
+      this.gamePhase = "game";
+      return true;
+    }
+
+    return false;
+  }
+
   public getAllPlayers(): Array<string | Player> {
     return Array.from(this.players, ([playerSocket, playerData]) => ({
       playerSocket,

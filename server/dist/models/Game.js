@@ -76,6 +76,21 @@ var Game = /** @class */ (function () {
         }
         return false;
     };
+    Game.prototype.allCardsIsSelected = function () {
+        var rolesCount = this.roles.length;
+        var selectedRolesCount = 0;
+        for (var _i = 0, _a = this.roles; _i < _a.length; _i++) {
+            var role = _a[_i];
+            if (role.isSelected === true) {
+                selectedRolesCount++;
+            }
+        }
+        if (rolesCount === selectedRolesCount) {
+            this.gamePhase = "game";
+            return true;
+        }
+        return false;
+    };
     Game.prototype.getAllPlayers = function () {
         return Array.from(this.players, function (_a) {
             var playerSocket = _a[0], playerData = _a[1];
