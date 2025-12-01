@@ -7,6 +7,9 @@ import styles from "./styles.module.css";
 const Game: React.FC = () => {
   const [isActionsModal, setIsActionsModal] = useState<boolean>(false);
   const [playerData, setPlayerData] = useState<LobbyPlayer>();
+  const [events, setEvents] = useState([]);
+  const [isPhoneModal, setIsPhoneModal] = useState<boolean>(false);
+  const [isEventModal, setIsEventModal] = useState<boolean>(false);
 
   const onOpen = (): void => {
     setIsActionsModal(true);
@@ -14,6 +17,14 @@ const Game: React.FC = () => {
 
   const onClose = (): void => {
     setIsActionsModal(false);
+  };
+
+  const acceptCall = (): void => {
+    setIsPhoneModal(false);
+  };
+
+  const cancleCall = (): void => {
+    setIsPhoneModal(false);
   };
 
   useEffect(() => {
@@ -63,8 +74,53 @@ const Game: React.FC = () => {
               })}
             </div>
           </div>
+
+          <div className={styles.actionBox}>
+            <div className={styles.actionPhone}>
+              <button
+                className={styles.phoneButton}
+                onClick={() => setIsPhoneModal(true)}
+              >
+                <img src="/images/phone.png" alt="" />
+              </button>
+            </div>
+            <div className={styles.actionMessage}>
+              <button className={styles.messageButton}>
+                <p className={styles.buttonText}>Сообщения</p>
+                <span className={styles.buttonBadge}>{events.length}</span>
+              </button>
+            </div>
+          </div>
         </div>
       )}
+
+      {isPhoneModal && (
+        <div className={styles.modal}>
+          <div className={styles.telephoneBox}>
+            <img
+              src="/images/telephone.png"
+              alt=""
+              className={styles.telephone}
+            />
+            <div className={styles.telephoneButtons}>
+              <button
+                className={styles.telephoneButton}
+                onClick={() => acceptCall()}
+              >
+                <img src="/images/accept-button.png" alt="" />
+              </button>
+
+              <button
+                className={styles.telephoneButton}
+                onClick={() => cancleCall()}
+              >
+                <img src="/images/cancle-button.png" alt="" />
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <header className={styles.header}>
         <div className={styles.headerTitle}>
           <h4 className={styles.title}>ФАБРИКА ПРОЦЕССОВ</h4>

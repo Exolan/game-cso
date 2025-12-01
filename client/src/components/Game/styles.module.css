@@ -149,6 +149,7 @@
 
 .modal {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   position: absolute;
@@ -163,7 +164,7 @@
   flex-direction: column;
   background-color: #fcfcf2;
   border-radius: 20px;
-  padding: 50px;
+  /* padding: 50px; */
   gap: 30px;
   max-width: 1544px;
 }
@@ -172,6 +173,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin: 50px 50px 0 50px;
 }
 
 .headerButton {
@@ -189,9 +191,15 @@
 }
 
 .modalButtons {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 16px;
+  margin: 0 50px 50px 50px;
+}
+
+.modalButtons > *:nth-last-child(1):nth-child(odd) {
+  grid-column: 1 / -1;
+  justify-self: center;
 }
 
 .modalButtons .button {
@@ -209,4 +217,99 @@
 
 .modalButtons .button:hover p {
   color: #ade1bd;
+}
+
+.actionBox {
+  display: flex;
+  width: 100%;
+  max-width: 1544px;
+  flex-direction: column;
+  margin-top: 30px;
+  gap: 15px;
+  align-items: flex-end;
+}
+
+.actionPhone {
+  width: 100%;
+  height: max-content;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.phoneButton {
+  display: flex;
+  width: 100px;
+  height: 100px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background-color: #ade1bd;
+}
+
+.actionMessage {
+  margin-right: 90px;
+}
+
+.messageButton {
+  background-color: #ade1bd;
+  position: relative;
+  padding: 10px 20px;
+}
+
+.messageButton .buttonText {
+  color: #1d5564;
+}
+
+.buttonBadge {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: -15px;
+  right: -12px;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  background-color: #e84f4f;
+  font-size: 18px;
+  color: #fcfcf2;
+}
+
+.telephoneBox {
+  position: relative;
+  width: max-content;
+  height: max-content;
+}
+
+.telephone {
+  position: relative;
+  width: auto;
+  height: 80vh;
+}
+
+.telephoneButtons {
+  display: flex;
+  justify-content: space-around;
+  position: absolute;
+  top: auto;
+  bottom: 8vh;
+  left: 0;
+  width: 100%;
+}
+
+.telephoneButton {
+  all: unset;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: inherit;
+  border-radius: 50%;
+  width: max-content;
+  height: max-content;
+}
+
+.telephoneButton img {
+  width: 5vw;
+  height: auto;
+  cursor: pointer;
 }

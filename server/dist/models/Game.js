@@ -20,6 +20,7 @@ var Game = /** @class */ (function () {
         this.minPlayers = 4;
         this.maxPlayers = 10;
         this.roles = [];
+        this.events = new Map();
     }
     Game.prototype.initializeRoles = function (countPlayers) {
         if (!roles_1.roles) {
