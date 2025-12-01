@@ -57,17 +57,17 @@ const Game: React.FC = () => {
               </button>
             </div>
             <div className={styles.modalButtons}>
-              {playerData?.playerRole?.roleButtons.map((button) => {
+              {playerData?.playerRole?.roleEvents.map((button, index) => {
                 return (
                   button.isActive && (
                     <button
-                      key={button.buttonId}
+                      key={index}
                       onClick={() => {
-                        console.log("Запуск ивента", button.buttonEvent);
+                        console.log("Запуск ивента", button.eventEmit);
                       }}
                       className={styles.button}
                     >
-                      <p>{button.buttonText}</p>
+                      <p>{button.eventTitle}</p>
                     </button>
                   )
                 );
