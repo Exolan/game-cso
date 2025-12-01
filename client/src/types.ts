@@ -22,6 +22,7 @@ export interface GameRole {
 export interface RoleEvent {
   eventEmit: string;
   eventTitle: string;
+  eventDesc?: string;
   isActive: boolean;
   eventData?: [];
   eventImage?: string;

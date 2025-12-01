@@ -164,7 +164,6 @@
   flex-direction: column;
   background-color: #fcfcf2;
   border-radius: 20px;
-  /* padding: 50px; */
   gap: 30px;
   max-width: 1544px;
 }
@@ -203,7 +202,11 @@
 }
 
 .modalButtons .button {
-  height: 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 40px;
+  height: 100%;
   background-color: #ade1bd;
 }
 
@@ -215,8 +218,30 @@
   background-color: #1d5564;
 }
 
-.modalButtons .button:hover p {
+.modalButtons .button:hover p,
+.modalButtons .button:hover h5 {
   color: #ade1bd;
+}
+
+.modalButtons .buttonTitle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60px;
+  gap: 20px;
+}
+
+.modalButtons h5,
+.modalButtons p {
+  text-align: start;
+}
+
+.modalButtons .buttonTitle img {
+  height: auto;
+}
+
+.modalButtons .buttonDesc {
+  display: flex;
 }
 
 .actionBox {
@@ -246,6 +271,10 @@
   background-color: #ade1bd;
 }
 
+.phoneButton:hover {
+  background-color: #1d5564;
+}
+
 .actionMessage {
   margin-right: 90px;
 }
@@ -258,6 +287,15 @@
 
 .messageButton .buttonText {
   color: #1d5564;
+  transition: color 0.2s ease-in-out;
+}
+
+.messageButton:hover {
+  background-color: #1d5564;
+}
+
+.messageButton:hover .buttonText {
+  color: #ade1bd;
 }
 
 .buttonBadge {

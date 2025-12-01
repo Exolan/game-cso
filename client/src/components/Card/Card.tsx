@@ -7,7 +7,7 @@ import styles from "./styles.module.css";
 const Card: React.FC<
   | Omit<
       GameRole,
-      | "roleButtons"
+      | "roleEvents"
       | "roleDescription"
       | "roleNumber"
       | "rolePassword"

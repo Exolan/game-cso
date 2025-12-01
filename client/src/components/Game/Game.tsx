@@ -67,7 +67,21 @@ const Game: React.FC = () => {
                       }}
                       className={styles.button}
                     >
-                      <p>{button.eventTitle}</p>
+                      <div className={styles.buttonTitle}>
+                        {button.eventImage && (
+                          <img src={button.eventImage} alt="" />
+                        )}
+                        <h5>
+                          {button.eventData
+                            ? `${button.eventTitle} (${button.eventData?.length})`
+                            : button.eventTitle}
+                        </h5>
+                      </div>
+                      {button.eventDesc && (
+                        <div className={styles.buttonDesc}>
+                          <p>{button.eventDesc}</p>
+                        </div>
+                      )}
                     </button>
                   )
                 );
@@ -87,7 +101,9 @@ const Game: React.FC = () => {
             <div className={styles.actionMessage}>
               <button className={styles.messageButton}>
                 <p className={styles.buttonText}>Сообщения</p>
-                <span className={styles.buttonBadge}>{events.length}</span>
+                {events.length > 0 && (
+                  <span className={styles.buttonBadge}>{events.length}</span>
+                )}
               </button>
             </div>
           </div>
