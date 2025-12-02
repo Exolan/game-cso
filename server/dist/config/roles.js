@@ -28,7 +28,58 @@ exports.roles = [
                 eventEmit: "get-patients",
                 eventTitle: "Обработать лист ожидания к узким специалистам",
                 eventDesc: "Вам необходимо записать пациентов из списка ожидания на приём к нужным им врачам. Ваша задача: для каждого пациента найти свободный слот в расписании его врача и занести туда данные.",
-                eventData: Array.from({ length: 10 }),
+                eventData: [
+                    {
+                        dataTitle: "Анна Ветрова,\nк кардиологу",
+                        dataText: "«Беспокоит шум в ушах при виде спиралей в метро»",
+                        dataImg: "/images/event-icon 2.png",
+                    },
+                    {
+                        dataTitle: "Борис Громов,\nк неврологу",
+                        dataText: "«Жалуется, что забывает пароли ещё до того, как их придумал»",
+                        dataImg: "/images/event-icon 5.png",
+                    },
+                    {
+                        dataTitle: "Василиса Цветкова,\nк дерматологу",
+                        dataText: "«Обнаружила, что кожа на локтях не совпадает по тону с новым айфоном»",
+                        dataImg: "/images/event-icon 3.png",
+                    },
+                    {
+                        dataTitle: "Геннадий Стулов,\nк ортопеду",
+                        dataText: "«Уверен, что левая нога стала короче после обновления iOS»",
+                        dataImg: "/images/event-icon 6.png",
+                    },
+                    {
+                        dataTitle: "Дарья Лучина,\nк офтальмологу",
+                        dataText: "«Видятся рекламные баннеры на стенах в реальной жизни»",
+                        dataImg: "/images/event-icon 7.png",
+                    },
+                    {
+                        dataTitle: "Егор Каменских,\nк гастроэнтерологу",
+                        dataText: "«Организм отказывается переваривать пищу без эмодзи в описании»",
+                        dataImg: "/images/event-icon 1.png",
+                    },
+                    {
+                        dataTitle: "Злата Родникова,\nк эндокринологу",
+                        dataText: "«Подозревает, что уровень сахара падает при отрицательных лайках»",
+                        dataImg: "/images/event-icon 10.png",
+                    },
+                    {
+                        dataTitle: "Игорь Белов,\nк отоларингологу",
+                        dataText: "«Слышит уведомления от выключенных устройств»",
+                        dataImg: "/images/event-icon 4.png",
+                    },
+                    {
+                        dataTitle: "Кира Солнечная,\nк психотерапевту",
+                        dataText: "«Требует выписать справку о несовместимости с офлайн-общением»",
+                        dataImg: "/images/event-icon 8.png",
+                    },
+                    {
+                        dataTitle: "Леонид Онегин,\nк урологу",
+                        dataText: "«Жалуется на зависание процесса в самый неподходящий момент»",
+                        dataImg: "/images/event-icon 9.png",
+                    },
+                ],
                 isActive: true,
                 eventImage: "/images/list.png",
             },

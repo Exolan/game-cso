@@ -25,8 +25,14 @@ export interface RoleEvent {
   eventTitle: string;
   eventDesc?: string;
   isActive: boolean;
-  eventData?: any;
+  eventData?: EventData[];
   eventImage?: string;
+}
+
+export interface EventData {
+  dataTitle: string;
+  dataText: string;
+  dataImg?: string;
 }
 
 export interface GameEvent {

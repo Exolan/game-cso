@@ -24,7 +24,7 @@ export interface RoleEvent {
   eventTitle: string;
   eventDesc?: string;
   isActive: boolean;
-  eventData?: [];
+  eventData?: EventData[];
   eventImage?: string;
 }
 
@@ -33,4 +33,10 @@ export interface GameEvent {
   eventType: "call" | "message" | "dialog" | "minigame";
   eventData: any;
   isActive: boolean;
+}
+
+export interface EventData {
+  dataTitle: string;
+  dataText: string;
+  dataImg?: string;
 }

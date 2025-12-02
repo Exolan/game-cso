@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { LobbyPlayer } from "../../types";
+import { EventData, LobbyPlayer } from "../../types";
 import { socket } from "../../socket";
 
 import styles from "./styles.module.css";
@@ -10,6 +10,7 @@ const Game: React.FC = () => {
   const [events, setEvents] = useState([]);
   const [isPhoneModal, setIsPhoneModal] = useState<boolean>(false);
   const [isEventModal, setIsEventModal] = useState<boolean>(false);
+  const [eventModalData, setEventModalData] = useState<EventData[]>();
 
   const onOpen = (): void => {
     setIsActionsModal(true);
@@ -25,6 +26,10 @@ const Game: React.FC = () => {
 
   const cancleCall = (): void => {
     setIsPhoneModal(false);
+  };
+
+  const openEventModal = (eventData: EventData[]): void => {
+    setIsEventModal(true);
   };
 
   useEffect(() => {
@@ -63,7 +68,9 @@ const Game: React.FC = () => {
                     <button
                       key={index}
                       onClick={() => {
-                        console.log("Запуск ивента", button.eventEmit);
+                        button.eventData
+                          ? openEventModal(button.eventData)
+                          : console.log("Запуск события", button.eventEmit);
                       }}
                       className={styles.button}
                     >
