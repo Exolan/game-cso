@@ -33,6 +33,7 @@ export interface EventData {
   dataTitle: string;
   dataText: string;
   dataImg?: string;
+  isActive: boolean;
 }
 
 export interface GameEvent {

@@ -39,4 +39,5 @@ export interface EventData {
   dataTitle: string;
   dataText: string;
   dataImg?: string;
+  isActive: boolean;
 }
