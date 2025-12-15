@@ -58,13 +58,23 @@ var SocketHandlers = /** @class */ (function () {
     };
     SocketHandlers.prototype.onGetPlayerData = function (socket) {
         var _this = this;
-        socket.on("getPlayerData", function () {
+        socket.on("getPlayerData", function (playerId) {
+            if (playerId === void 0) { playerId = null; }
             try {
+                if (playerId !== null) {
+                    logger_1.default.info("Игрок уже существует. Переподключаем...", {
+                        playerId: playerId,
+                        newSocketId: socket.id,
+                    });
+                    _this.game.changePlayerSocket(socket.id, playerId);
+                }
                 var playerData = _this.game.getPlayerData(socket.id);
                 if (playerData === null) {
                     return;
                 }
-                logger_1.default.info("\u041E\u0442\u043F\u0440\u0430\u0432\u043A\u0430 \u0434\u0430\u043D\u043D\u044B\u0445 \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044E ".concat(socket.id));
+                logger_1.default.info("\u041E\u0442\u043F\u0440\u0430\u0432\u043A\u0430 \u0434\u0430\u043D\u043D\u044B\u0445 \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044E ".concat(socket.id), {
+                    playerData: playerData,
+                });
                 socket.emit("sendPlayerData", playerData);
             }
             catch (error) {
@@ -82,7 +92,7 @@ var SocketHandlers = /** @class */ (function () {
                 if (player) {
                     return;
                 }
-                _this.game.craetePlayer(socket.id);
+                _this.game.createPlayer(socket.id);
                 logger_1.default.info("Игрок подключился", { socketId: socket.id });
                 socket.emit("changeGamePhase", _this.game.gamePhase);
                 _this.emitLobbyUpdate();
@@ -129,15 +139,20 @@ var SocketHandlers = /** @class */ (function () {
                     logger_1.default.warn("Игрока не существует!");
                     return;
                 }
-                if (_this.game.gamePhase !== "game") {
-                    _this.game.resetPlayersIsReady();
-                    _this.io.emit("backToLobby");
+                if (_this.game.gamePhase === "game") {
+                    return;
                 }
+                _this.game.resetPlayersIsReady();
+                _this.io.emit("backToLobby");
                 logger_1.default.info("Игрок отключился", { socketId: socket.id, reason: reason });
                 _this.game.deletePlayer(socket.id);
                 _this.emitLobbyUpdate();
             }
-            catch (error) { }
+            catch (error) {
+                logger_1.default.error("Ошибка отключения игрока", error, {
+                    socketId: socket.id,
+                });
+            }
         });
     };
     return SocketHandlers;

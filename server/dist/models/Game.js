@@ -30,7 +30,7 @@ var Game = /** @class */ (function () {
             this.roles.push(roles_1.roles[i]);
         }
     };
-    Game.prototype.craetePlayer = function (playerSocket) {
+    Game.prototype.createPlayer = function (playerSocket) {
         var playerId = this.players.size;
         this.players.set(playerSocket, {
             playerId: playerId,
@@ -115,6 +115,17 @@ var Game = /** @class */ (function () {
     };
     Game.prototype.deletePlayer = function (playerSocket) {
         this.players.delete(playerSocket);
+    };
+    Game.prototype.changePlayerSocket = function (playerSocket, playerId) {
+        var entry = Array.from(this.players.entries()).find(function (_a) {
+            var socket = _a[0], player = _a[1];
+            return player.playerId === playerId;
+        });
+        if (entry) {
+            var oldSocket = entry[0], player = entry[1];
+            this.players.delete(oldSocket);
+            this.players.set(playerSocket, player);
+        }
     };
     return Game;
 }());

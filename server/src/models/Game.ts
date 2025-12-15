@@ -28,7 +28,7 @@ export class Game {
     }
   }
 
-  public craetePlayer(playerSocket: string): void {
+  public createPlayer(playerSocket: string): void {
     const playerId = this.players.size;
 
     this.players.set(playerSocket, {
@@ -138,5 +138,18 @@ export class Game {
 
   public deletePlayer(playerSocket: string): void {
     this.players.delete(playerSocket);
+  }
+
+  public changePlayerSocket(playerSocket: string, playerId: number): void {
+    const entry = Array.from(this.players.entries()).find(
+      ([socket, player]) => player.playerId === playerId
+    );
+
+    if (entry) {
+      const [oldSocket, player] = entry;
+
+      this.players.delete(oldSocket);
+      this.players.set(playerSocket, player);
+    }
   }
 }

@@ -5,21 +5,48 @@ import { socket } from "../../socket";
 import styles from "./styles.module.css";
 
 import ActionsModal from "../ActionsModal/ActionsModal";
+import LoadingPage from "../LoadingPage/LoadingPage";
 
 const Game: React.FC = () => {
   const [isActionsModal, setIsActionsModal] = useState<boolean>(false);
   const [playerData, setPlayerData] = useState<LobbyPlayer | null>(null);
   const [events, setEvents] = useState([]);
 
+  const getLocalStorage = (): number | null => {
+    const item = localStorage.getItem("playerId");
+    if (item === null) {
+      return null;
+    }
+
+    const num = Number(item);
+    return isNaN(num) ? null : num;
+  };
+
+  const createLocalStorage = (playerId: number): void => {
+    localStorage.setItem("playerId", JSON.stringify(playerId));
+  };
+
   const onOpen = (): void => {
     setIsActionsModal(true);
   };
 
   useEffect(() => {
-    socket.emit("getPlayerData");
+    const playerId = getLocalStorage();
+
+    if (playerId === null) {
+      socket.emit("getPlayerData");
+    } else {
+      socket.emit("getPlayerData", playerId);
+    }
 
     const handlePlayerData = (newPlayerData: LobbyPlayer) => {
+      console.log(newPlayerData);
+
       setPlayerData(newPlayerData);
+
+      if (newPlayerData?.playerId) {
+        createLocalStorage(newPlayerData.playerId);
+      }
     };
 
     socket.on("sendPlayerData", handlePlayerData);
@@ -31,7 +58,7 @@ const Game: React.FC = () => {
     };
   }, []);
 
-  return (
+  return playerData ? (
     <div className={styles.conteiner}>
       {isActionsModal && (
         <ActionsModal
@@ -129,6 +156,8 @@ const Game: React.FC = () => {
         </div>
       </div>
     </div>
+  ) : (
+    <LoadingPage />
   );
 };
 

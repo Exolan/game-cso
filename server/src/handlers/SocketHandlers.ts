@@ -63,14 +63,25 @@ export class SocketHandlers {
   }
 
   private onGetPlayerData(socket: Socket): void {
-    socket.on("getPlayerData", () => {
+    socket.on("getPlayerData", (playerId: number | null = null) => {
       try {
+        if (playerId !== null) {
+          Logger.info("Игрок уже существует. Переподключаем...", {
+            playerId: playerId,
+            newSocketId: socket.id,
+          });
+
+          this.game.changePlayerSocket(socket.id, playerId);
+        }
+
         const playerData = this.game.getPlayerData(socket.id);
         if (playerData === null) {
           return;
         }
 
-        Logger.info(`Отправка данных пользователю ${socket.id}`);
+        Logger.info(`Отправка данных пользователю ${socket.id}`, {
+          playerData: playerData,
+        });
 
         socket.emit("sendPlayerData", playerData);
       } catch (error) {
@@ -89,7 +100,7 @@ export class SocketHandlers {
           return;
         }
 
-        this.game.craetePlayer(socket.id);
+        this.game.createPlayer(socket.id);
 
         Logger.info("Игрок подключился", { socketId: socket.id });
 
@@ -146,15 +157,20 @@ export class SocketHandlers {
           return;
         }
 
-        if (this.game.gamePhase !== "game") {
-          this.game.resetPlayersIsReady();
-          this.io.emit("backToLobby");
+        if (this.game.gamePhase === "game") {
+          return;
         }
 
+        this.game.resetPlayersIsReady();
+        this.io.emit("backToLobby");
         Logger.info("Игрок отключился", { socketId: socket.id, reason });
         this.game.deletePlayer(socket.id);
         this.emitLobbyUpdate();
-      } catch (error) {}
+      } catch (error) {
+        Logger.error("Ошибка отключения игрока", error, {
+          socketId: socket.id,
+        });
+      }
     });
   }
 }

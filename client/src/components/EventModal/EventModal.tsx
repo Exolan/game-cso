@@ -28,29 +28,30 @@ const EventModal: React.FC<{
           </button>
         </div>
         <div className={styles.modalButtons}>
-          {eventModalData.map((button, index) => {
-            return (
-              button.isActive && (
-                <button
-                  key={index}
-                  onClick={() => {
-                    console.log("Запуск события");
-                  }}
-                  className={styles.button}
-                >
-                  <div className={styles.buttonTitle}>
-                    {button.dataImg && <img src={button.dataImg} alt="" />}
-                    <h5>{button.dataTitle}</h5>
-                  </div>
-                  {button.dataText && (
-                    <div className={styles.buttonDesc}>
-                      <p>{button.dataText}</p>
+          {eventModalData &&
+            eventModalData.map((button, index) => {
+              return (
+                button.isActive && (
+                  <button
+                    key={index}
+                    onClick={() => {
+                      console.log("Запуск события");
+                    }}
+                    className={styles.button}
+                  >
+                    <div className={styles.buttonTitle}>
+                      {button.dataImg && <img src={button.dataImg} alt="" />}
+                      <h5>{button.dataTitle}</h5>
                     </div>
-                  )}
-                </button>
-              )
-            );
-          })}
+                    {button.dataText && (
+                      <div className={styles.buttonDesc}>
+                        <p>{button.dataText}</p>
+                      </div>
+                    )}
+                  </button>
+                )
+              );
+            })}
         </div>
       </div>
     </div>
