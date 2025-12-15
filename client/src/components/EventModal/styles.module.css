@@ -55,6 +55,7 @@
   gap: 16px;
   margin: 0 50px 50px 50px;
   overflow-y: auto;
+  padding-right: 1rem;
 }
 
 /* .modalButtons > *:nth-last-child(1):nth-child(odd) {
