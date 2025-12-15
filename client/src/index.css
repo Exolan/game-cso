@@ -24,6 +24,7 @@ h1,
 h2,
 h3,
 h4,
+h5,
 p {
   color: #1d5564;
   font-family: "Golos", sans-serif;
@@ -48,6 +49,11 @@ h4 {
   font-size: 36px;
 }
 
+h5 {
+  font-size: 24px;
+  font-weight: 500;
+}
+
 p {
   font-size: 20px;
 }
@@ -63,7 +69,8 @@ button {
   height: 70px;
 }
 
-button h4 {
+button h4,
+button h5 {
   transition: color 0.2s ease-in-out;
 }
 
@@ -71,7 +78,8 @@ button:hover {
   background-color: #a4dcdd;
 }
 
-button:hover h4 {
+button:hover h4,
+button:hover h5 {
   color: #1d5564;
 }
 

@@ -15,13 +15,29 @@ export interface GameRole {
   roleProfile: string;
   roleTask: string;
   roleImg: string;
-  roleButtons: RoleButton[];
+  roleEvents: RoleEvent[];
   isSelected: boolean;
 }
 
-export interface RoleButton {
-  buttonId: number;
-  buttonEvent: string;
-  buttonText: string;
+export interface RoleEvent {
+  eventEmit: string;
+  eventTitle: string;
+  eventDesc?: string;
+  isActive: boolean;
+  eventData?: EventData[];
+  eventImage?: string;
+}
+
+export interface GameEvent {
+  eventId: number;
+  eventType: "call" | "message" | "dialog" | "minigame";
+  eventData: any;
+  isActive: boolean;
+}
+
+export interface EventData {
+  dataTitle: string;
+  dataText: string;
+  dataImg?: string;
   isActive: boolean;
 }

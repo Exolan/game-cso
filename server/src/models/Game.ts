@@ -1,4 +1,4 @@
-import { GamePhase, GameRole, Player } from "src/types/types";
+import { GamePhase, GameRole, Player, GameEvent } from "src/types/types";
 import { roles } from "../config/roles";
 
 export class Game {
@@ -7,6 +7,7 @@ export class Game {
   public minPlayers: number;
   public maxPlayers: number;
   public roles: GameRole[];
+  public events: Map<string, GameEvent>;
 
   constructor() {
     this.players = new Map();
@@ -14,6 +15,7 @@ export class Game {
     this.minPlayers = 4;
     this.maxPlayers = 10;
     this.roles = [];
+    this.events = new Map();
   }
 
   private initializeRoles(countPlayers: number): void {
@@ -26,7 +28,7 @@ export class Game {
     }
   }
 
-  public craetePlayer(playerSocket: string): void {
+  public createPlayer(playerSocket: string): void {
     const playerId = this.players.size;
 
     this.players.set(playerSocket, {
@@ -112,6 +114,18 @@ export class Game {
     }));
   }
 
+  public getPlayerData(
+    socketId: string
+  ): ({ socketId: string } & Player) | null {
+    const player = this.players.get(socketId);
+
+    if (player) {
+      return { socketId, ...player };
+    }
+
+    return null;
+  }
+
   public getAllRoles(): GameRole[] {
     return this.roles;
   }
@@ -124,5 +138,18 @@ export class Game {
 
   public deletePlayer(playerSocket: string): void {
     this.players.delete(playerSocket);
+  }
+
+  public changePlayerSocket(playerSocket: string, playerId: number): void {
+    const entry = Array.from(this.players.entries()).find(
+      ([socket, player]) => player.playerId === playerId
+    );
+
+    if (entry) {
+      const [oldSocket, player] = entry;
+
+      this.players.delete(oldSocket);
+      this.players.set(playerSocket, player);
+    }
   }
 }
