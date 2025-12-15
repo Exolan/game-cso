@@ -17,6 +17,7 @@
   border-radius: 20px;
   gap: 30px;
   max-width: 1544px;
+  max-height: 80vh;
 }
 
 .modalHeader {
@@ -53,12 +54,13 @@
   grid-template-columns: 1fr 1fr;
   gap: 16px;
   margin: 0 50px 50px 50px;
+  overflow-y: auto;
 }
 
-.modalButtons > *:nth-last-child(1):nth-child(odd) {
+/* .modalButtons > *:nth-last-child(1):nth-child(odd) {
   grid-column: 1 / -1;
   justify-self: center;
-}
+} */
 
 .modalButtons .button {
   display: flex;
@@ -84,10 +86,14 @@
 
 .modalButtons .buttonTitle {
   display: flex;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
   height: 60px;
   gap: 20px;
+}
+
+.modalButtons .buttonTitle h5 {
+  font-weight: 700;
 }
 
 .modalButtons h5,

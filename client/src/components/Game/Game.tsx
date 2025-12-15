@@ -40,8 +40,6 @@ const Game: React.FC = () => {
     }
 
     const handlePlayerData = (newPlayerData: LobbyPlayer) => {
-      console.log(newPlayerData);
-
       setPlayerData(newPlayerData);
 
       if (newPlayerData?.playerId) {
