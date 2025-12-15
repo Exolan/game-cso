@@ -94,6 +94,7 @@
 
 .modalButtons .buttonTitle h5 {
   font-weight: 700;
+  white-space: pre-git wrap;
 }
 
 .modalButtons h5,
@@ -102,7 +103,8 @@
 }
 
 .modalButtons .buttonTitle img {
-  height: auto;
+  width: auto;
+  height: 74px;
 }
 
 .modalButtons .buttonDesc {
