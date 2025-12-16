@@ -88,14 +88,20 @@ var SocketHandlers = /** @class */ (function () {
         var _this = this;
         socket.on("playerConnect", function () {
             try {
-                var player = _this.game.players.get(socket.id);
-                if (player) {
-                    return;
+                if (_this.game.players.size < _this.game.maxPlayers) {
+                    var player = _this.game.players.get(socket.id);
+                    if (player) {
+                        return;
+                    }
+                    _this.game.createPlayer(socket.id);
+                    logger_1.default.info("Игрок подключился", { socketId: socket.id });
+                    socket.emit("changeGamePhase", _this.game.gamePhase);
+                    _this.emitLobbyUpdate();
                 }
-                _this.game.createPlayer(socket.id);
-                logger_1.default.info("Игрок подключился", { socketId: socket.id });
-                socket.emit("changeGamePhase", _this.game.gamePhase);
-                _this.emitLobbyUpdate();
+                else {
+                    logger_1.default.info("Невозможно подключиться");
+                    socket.emit("errorMessage", "Ошибка подключения. Игроков уже макимальное количество");
+                }
             }
             catch (error) {
                 logger_1.default.error("Ошибка подключения игрока", error, {
@@ -143,7 +149,9 @@ var SocketHandlers = /** @class */ (function () {
                     return;
                 }
                 _this.game.resetPlayersIsReady();
-                _this.io.emit("backToLobby");
+                _this.game.resetCardsIsSelected();
+                _this.game.gamePhase = "lobby";
+                _this.io.emit("changeGamePhase", _this.game.gamePhase);
                 logger_1.default.info("Игрок отключился", { socketId: socket.id, reason: reason });
                 _this.game.deletePlayer(socket.id);
                 _this.emitLobbyUpdate();

@@ -95,17 +95,26 @@ export class SocketHandlers {
   private onPlayerConnect(socket: Socket): void {
     socket.on("playerConnect", () => {
       try {
-        const player = this.game.players.get(socket.id);
-        if (player) {
-          return;
+        if (this.game.players.size < this.game.maxPlayers) {
+          const player = this.game.players.get(socket.id);
+          if (player) {
+            return;
+          }
+
+          this.game.createPlayer(socket.id);
+
+          Logger.info("Игрок подключился", { socketId: socket.id });
+
+          socket.emit("changeGamePhase", this.game.gamePhase);
+          this.emitLobbyUpdate();
+        } else {
+          Logger.info("Невозможно подключиться");
+
+          socket.emit(
+            "errorMessage",
+            "Ошибка подключения. Игроков уже макимальное количество"
+          );
         }
-
-        this.game.createPlayer(socket.id);
-
-        Logger.info("Игрок подключился", { socketId: socket.id });
-
-        socket.emit("changeGamePhase", this.game.gamePhase);
-        this.emitLobbyUpdate();
       } catch (error) {
         Logger.error("Ошибка подключения игрока", error, {
           socketId: socket.id,
@@ -162,7 +171,9 @@ export class SocketHandlers {
         }
 
         this.game.resetPlayersIsReady();
-        this.io.emit("backToLobby");
+        this.game.resetCardsIsSelected();
+        this.game.gamePhase = "lobby";
+        this.io.emit("changeGamePhase", this.game.gamePhase);
         Logger.info("Игрок отключился", { socketId: socket.id, reason });
         this.game.deletePlayer(socket.id);
         this.emitLobbyUpdate();
