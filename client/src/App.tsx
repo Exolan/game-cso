@@ -11,6 +11,7 @@ import StartPage from "./components/StartPage/StartPage";
 import Game from "./components/Game/Game";
 import Cards from "./components/Cards/Cards";
 import Lobby from "./components/Lobby/Lobby";
+import ErrorModal from "./components/ErrorModal/ErrorModal";
 
 const ProtectedRoute: React.FC<{
   children: React.ReactNode;
@@ -21,6 +22,8 @@ const ProtectedRoute: React.FC<{
 
 const AppContent: React.FC = () => {
   const [isConnected, setIsConnected] = useState<boolean>(false);
+  const [isError, setIsError] = useState<boolean>(false);
+  const [messageError, setMessageError] = useState<string | null>(null);
   const navigate = useNavigate();
 
   function handleConnect(): void {
@@ -30,6 +33,11 @@ const AppContent: React.FC = () => {
     } else {
       socket.connect();
     }
+  }
+
+  function handleError(message: string): void {
+    setIsError(true);
+    setMessageError(message);
   }
 
   useEffect(() => {
@@ -44,13 +52,13 @@ const AppContent: React.FC = () => {
     }
 
     function handleChangeGamePhase(newGamePhase: string): void {
-      console.log("Новая игровая фаза", newGamePhase);
       navigate("/" + newGamePhase);
     }
 
     socket.on("connect", handleConnectEvent);
     socket.on("disconnect", handleDisconnect);
     socket.on("changeGamePhase", handleChangeGamePhase);
+    socket.on("errorMessage", handleError);
 
     if (socket.connected) {
       handleConnectEvent();
@@ -64,33 +72,39 @@ const AppContent: React.FC = () => {
   }, [navigate]);
 
   return (
-    <Routes>
-      <Route path="/" element={<StartPage handleConnect={handleConnect} />} />
-      <Route
-        path="/lobby"
-        element={
-          <ProtectedRoute isConnected={isConnected}>
-            <Lobby />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/cards"
-        element={
-          <ProtectedRoute isConnected={isConnected}>
-            <Cards />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/game"
-        element={
-          <ProtectedRoute isConnected={isConnected}>
-            <Game />
-          </ProtectedRoute>
-        }
-      />
-    </Routes>
+    <>
+      <Routes>
+        <Route path="/" element={<StartPage handleConnect={handleConnect} />} />
+        <Route
+          path="/lobby"
+          element={
+            <ProtectedRoute isConnected={isConnected}>
+              <Lobby />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/cards"
+          element={
+            <ProtectedRoute isConnected={isConnected}>
+              <Cards />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/game"
+          element={
+            <ProtectedRoute isConnected={isConnected}>
+              <Game />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+
+      {isError && messageError && (
+        <ErrorModal setIsError={setIsError} messageError={messageError} />
+      )}
+    </>
   );
 };
 
