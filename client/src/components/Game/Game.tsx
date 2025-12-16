@@ -10,6 +10,7 @@ import LoadingPage from "../LoadingPage/LoadingPage";
 const Game: React.FC = () => {
   const [isActionsModal, setIsActionsModal] = useState<boolean>(false);
   const [playerData, setPlayerData] = useState<LobbyPlayer | null>(null);
+  const [count, setCount] = useState<number>(0);
   const [events, setEvents] = useState([]);
 
   const getLocalStorage = (): number | null => {
@@ -30,6 +31,24 @@ const Game: React.FC = () => {
     setIsActionsModal(true);
   };
 
+  const countTasks = (newPlayerData: LobbyPlayer): void => {
+    let newCount = 0;
+    const roleEvents = newPlayerData.playerRole?.roleEvents;
+
+    if (!roleEvents) {
+      setCount(0);
+      return;
+    }
+
+    for (const event of roleEvents) {
+      if (event.eventData) {
+        newCount += event.eventData.length;
+      }
+    }
+
+    setCount(newCount);
+  };
+
   useEffect(() => {
     const playerId = getLocalStorage();
 
@@ -45,6 +64,8 @@ const Game: React.FC = () => {
       if (newPlayerData?.playerId) {
         createLocalStorage(newPlayerData.playerId);
       }
+
+      countTasks(newPlayerData);
     };
 
     socket.on("sendPlayerData", handlePlayerData);
@@ -150,6 +171,7 @@ const Game: React.FC = () => {
         <div className={styles.buttonBlock}>
           <button className={styles.button} onClick={() => onOpen()}>
             <h4 className={styles.buttonText}>перейти к действиям</h4>
+            <span className={styles.buttonBadge}>{count}</span>
           </button>
         </div>
       </div>
