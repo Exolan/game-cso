@@ -136,6 +136,16 @@ export class Game {
     });
   }
 
+  public resetCardsIsSelected(): void {
+    this.roles.forEach((role) => {
+      role.isSelected = false;
+    });
+    this.roles = [];
+    this.players.forEach((playerData) => {
+      playerData.playerRole = undefined;
+    });
+  }
+
   public deletePlayer(playerSocket: string): void {
     this.players.delete(playerSocket);
   }

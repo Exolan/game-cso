@@ -113,6 +113,15 @@ var Game = /** @class */ (function () {
             playerData.isReady = false;
         });
     };
+    Game.prototype.resetCardsIsSelected = function () {
+        this.roles.forEach(function (role) {
+            role.isSelected = false;
+        });
+        this.roles = [];
+        this.players.forEach(function (playerData) {
+            playerData.playerRole = undefined;
+        });
+    };
     Game.prototype.deletePlayer = function (playerSocket) {
         this.players.delete(playerSocket);
     };

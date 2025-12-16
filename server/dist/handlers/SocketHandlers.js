@@ -99,7 +99,7 @@ var SocketHandlers = /** @class */ (function () {
                     _this.emitLobbyUpdate();
                 }
                 else {
-                    logger_1.default.info("Невозможно подключиться. В игре уже 10 игроков");
+                    logger_1.default.info("Невозможно подключиться");
                     socket.emit("errorMessage", "Ошибка подключения. Игроков уже макимальное количество");
                 }
             }
@@ -149,8 +149,9 @@ var SocketHandlers = /** @class */ (function () {
                     return;
                 }
                 _this.game.resetPlayersIsReady();
+                _this.game.resetCardsIsSelected();
                 _this.game.gamePhase = "lobby";
-                _this.io.emit("backToLobby");
+                _this.io.emit("changeGamePhase", _this.game.gamePhase);
                 logger_1.default.info("Игрок отключился", { socketId: socket.id, reason: reason });
                 _this.game.deletePlayer(socket.id);
                 _this.emitLobbyUpdate();

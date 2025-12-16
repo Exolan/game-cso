@@ -171,8 +171,9 @@ export class SocketHandlers {
         }
 
         this.game.resetPlayersIsReady();
+        this.game.resetCardsIsSelected();
         this.game.gamePhase = "lobby";
-        this.io.emit("backToLobby");
+        this.io.emit("changeGamePhase", this.game.gamePhase);
         Logger.info("Игрок отключился", { socketId: socket.id, reason });
         this.game.deletePlayer(socket.id);
         this.emitLobbyUpdate();
