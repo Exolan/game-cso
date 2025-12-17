@@ -17,6 +17,7 @@ export interface GameRole {
   roleTask: string;
   roleImg: string;
   roleEvents: RoleEvent[];
+  roleMessages: Message[];
   isSelected: boolean;
 }
 
@@ -39,6 +40,20 @@ export interface EventData {
 export interface GameEvent {
   eventId: number;
   eventType: "call" | "message" | "dialog" | "minigame";
-  eventData: any;
+  eventData: Message;
+  eventSender?: number | "bot";
+  eventRecepient?: number;
   isActive: boolean;
+}
+
+export interface Message {
+  messageId: number;
+  messageText: string;
+  messageButtons: MessageButton[];
+}
+
+export interface MessageButton {
+  buttonId: number;
+  buttonText: string;
+  buttonEmit: string;
 }

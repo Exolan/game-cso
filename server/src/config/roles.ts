@@ -12,6 +12,7 @@ export const roles: GameRole[] = [
       "Хирург с невероятной точностью. Диагностирует болезни по малейшим симптомам.",
     roleImg: "/images/therapist.png",
     roleEvents: [],
+    roleMessages: [],
     isSelected: false,
   },
 
@@ -114,6 +115,8 @@ export const roles: GameRole[] = [
         eventImage: "/images/clip.png",
       },
     ],
+    roleMessages: [],
+
     isSelected: false,
   },
 
@@ -127,6 +130,7 @@ export const roles: GameRole[] = [
     roleDescription:
       "Гений медицинских технологий. Создает инновационные методы лечения.",
     roleImg: "/images/specialist.png",
+    roleMessages: [],
     roleEvents: [],
     isSelected: false,
   },
@@ -184,6 +188,8 @@ export const roles: GameRole[] = [
         isActive: true,
       },
     ],
+    roleMessages: [],
+
     isSelected: false,
   },
 
@@ -237,6 +243,8 @@ export const roles: GameRole[] = [
         isActive: true,
       },
     ],
+    roleMessages: [],
+
     isSelected: false,
   },
 
@@ -290,6 +298,8 @@ export const roles: GameRole[] = [
         isActive: true,
       },
     ],
+    roleMessages: [],
+
     isSelected: false,
   },
 
@@ -343,6 +353,8 @@ export const roles: GameRole[] = [
         isActive: true,
       },
     ],
+    roleMessages: [],
+
     isSelected: false,
   },
 
@@ -396,6 +408,8 @@ export const roles: GameRole[] = [
         isActive: true,
       },
     ],
+    roleMessages: [],
+
     isSelected: false,
   },
 
@@ -449,6 +463,8 @@ export const roles: GameRole[] = [
         isActive: true,
       },
     ],
+    roleMessages: [],
+
     isSelected: false,
   },
 
@@ -502,6 +518,8 @@ export const roles: GameRole[] = [
         isActive: true,
       },
     ],
+    roleMessages: [],
+
     isSelected: false,
   },
 ];
