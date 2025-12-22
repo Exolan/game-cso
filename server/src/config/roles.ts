@@ -11,7 +11,7 @@ export const roles: GameRole[] = [
     roleDescription:
       "Хирург с невероятной точностью. Диагностирует болезни по малейшим симптомам.",
     roleImg: "/images/therapist.png",
-    roleEvents: [],
+    roleButtons: [],
     isSelected: false,
   },
 
@@ -26,13 +26,13 @@ export const roles: GameRole[] = [
       "Ваша цель — обеспечить бесперебойную работу регистратуры в условиях многозадачности. Вы должны выполнить плановую работу, параллельно реагируя на срочные входящие события: телефонные звонки и живое общение с посетителями.",
     roleDescription: "Ваш рабочий день — это гибрид старых и новых технологий.",
     roleImg: "/images/receptionist.png",
-    roleEvents: [
+    roleButtons: [
       {
-        eventEmit: "get-patients",
-        eventTitle: "Обработать лист ожидания к узким специалистам",
-        eventDesc:
+        buttonEmit: "get-patients",
+        buttonTitle: "Обработать лист ожидания к узким специалистам",
+        buttonDesc:
           "Вам необходимо записать пациентов из списка ожидания на приём к нужным им врачам. Ваша задача: для каждого пациента найти свободный слот в расписании его врача и занести туда данные.",
-        eventData: [
+        buttonData: [
           {
             dataTitle: "Анна Ветрова,\nк кардиологу",
             dataText: "«Беспокоит шум в ушах при виде спиралей в метро»",
@@ -102,16 +102,16 @@ export const roles: GameRole[] = [
           },
         ],
         isActive: true,
-        eventImage: "/images/list.png",
+        buttonImage: "/images/list.png",
       },
       {
-        eventEmit: "get-results",
-        eventTitle: "Подшить результаты анализов в карты пациентов",
-        eventDesc:
+        buttonEmit: "get-results",
+        buttonTitle: "Подшить результаты анализов в карты пациентов",
+        buttonDesc:
           "Вам нужно корректно распределить результаты анализов по картам пациентов. Для этого перетащите каждый анализ в соответствующую папку.",
-        eventData: Array.from({ length: 8 }),
+        buttonData: Array.from({ length: 8 }),
         isActive: true,
-        eventImage: "/images/clip.png",
+        buttonImage: "/images/clip.png",
       },
     ],
     isSelected: false,
@@ -127,7 +127,7 @@ export const roles: GameRole[] = [
     roleDescription:
       "Гений медицинских технологий. Создает инновационные методы лечения.",
     roleImg: "/images/specialist.png",
-    roleEvents: [],
+    roleButtons: [],
     isSelected: false,
   },
 
@@ -144,43 +144,44 @@ export const roles: GameRole[] = [
       "Ваша жизнь — это идеальные кадры, безупречные ракурсы и тонны фильтров. Но однажды вы осознаете, что больше не можете видеть реальность без цифровой обработки.",
     roleCondition: '"Не вижу себя в зеркале без фотошоп-фильтров"',
     roleImg: "/images/patient.png",
-    roleEvents: [
+    roleButtons: [
       {
-        eventEmit: "chat-bot",
-        eventTitle: "Записаться на прием к терапевту через чат-бот",
+        buttonEmit: "chat-bot",
+        buttonTitle: "Записаться на прием к терапевту через чат-бот",
         isActive: true,
       },
       {
-        eventEmit: "cite-registratura",
-        eventTitle: "Записаться на прием к врачу на сайте «Регистратура»",
+        buttonEmit: "cite-registratura",
+        buttonTitle: "Записаться на прием к врачу на сайте «Регистратура»",
         isActive: true,
       },
       {
-        eventEmit: "visit-therapist",
-        eventTitle:
+        buttonEmit: "emit-message",
+        buttonTitle:
           "Посетить терапевта для получения направления к узкому специалисту",
         isActive: true,
       },
       {
-        eventEmit: "visit-registation",
-        eventTitle: "Обратиться в регистратуру для записи к узкому специалисту",
+        buttonEmit: "emit-message",
+        buttonTitle:
+          "Обратиться в регистратуру для записи к узкому специалисту",
         isActive: true,
       },
       {
-        eventEmit: "visit-specialist",
-        eventTitle:
+        buttonEmit: "emit-message",
+        buttonTitle:
           "Посетить узкого специалиста для подтверждения диагноза / необходимость льготного лекарства",
         isActive: true,
       },
       {
-        eventEmit: "call",
-        eventTitle:
+        buttonEmit: "emit-call",
+        buttonTitle:
           "Обратиться в службу 666 чтобы выписали рецепт на льготное лекарство",
         isActive: true,
       },
       {
-        eventEmit: "visit-pharmacy",
-        eventTitle: "Обратиться в аптеку для получения льготного лекарства",
+        buttonEmit: "visit-pharmacy",
+        buttonTitle: "Обратиться в аптеку для получения льготного лекарства",
         isActive: true,
       },
     ],
@@ -197,43 +198,44 @@ export const roles: GameRole[] = [
     roleDescription: "Никакой",
     roleCondition: '"Никакой"',
     roleImg: "/images/patient.png",
-    roleEvents: [
+    roleButtons: [
       {
-        eventEmit: "chat-bot",
-        eventTitle: "Записаться на прием к терапевту через чат-бот",
+        buttonEmit: "chat-bot",
+        buttonTitle: "Записаться на прием к терапевту через чат-бот",
         isActive: true,
       },
       {
-        eventEmit: "cite-registratura",
-        eventTitle: "Записаться на прием к врачу на сайте «Регистратура»",
+        buttonEmit: "cite-registratura",
+        buttonTitle: "Записаться на прием к врачу на сайте «Регистратура»",
         isActive: true,
       },
       {
-        eventEmit: "visit-therapist",
-        eventTitle:
+        buttonEmit: "emit-message",
+        buttonTitle:
           "Посетить терапевта для получения направления к узкому специалисту",
         isActive: true,
       },
       {
-        eventEmit: "visit-registation",
-        eventTitle: "Обратиться в регистратуру для записи к узкому специалисту",
+        buttonEmit: "emit-message",
+        buttonTitle:
+          "Обратиться в регистратуру для записи к узкому специалисту",
         isActive: true,
       },
       {
-        eventEmit: "visit-specialist",
-        eventTitle:
+        buttonEmit: "emit-message",
+        buttonTitle:
           "Посетить узкого специалиста для подтверждения диагноза / необходимость льготного лекарства",
         isActive: true,
       },
       {
-        eventEmit: "call",
-        eventTitle:
+        buttonEmit: "emit-call",
+        buttonTitle:
           "Обратиться в службу 666 чтобы выписали рецепт на льготное лекарство",
         isActive: true,
       },
       {
-        eventEmit: "visit-pharmacy",
-        eventTitle: "Обратиться в аптеку для получения льготного лекарства",
+        buttonEmit: "visit-pharmacy",
+        buttonTitle: "Обратиться в аптеку для получения льготного лекарства",
         isActive: true,
       },
     ],
@@ -250,43 +252,44 @@ export const roles: GameRole[] = [
     roleDescription: "Никакой",
     roleCondition: '"Никакой"',
     roleImg: "/images/patient.png",
-    roleEvents: [
+    roleButtons: [
       {
-        eventEmit: "chat-bot",
-        eventTitle: "Записаться на прием к терапевту через чат-бот",
+        buttonEmit: "chat-bot",
+        buttonTitle: "Записаться на прием к терапевту через чат-бот",
         isActive: true,
       },
       {
-        eventEmit: "cite-registratura",
-        eventTitle: "Записаться на прием к врачу на сайте «Регистратура»",
+        buttonEmit: "cite-registratura",
+        buttonTitle: "Записаться на прием к врачу на сайте «Регистратура»",
         isActive: true,
       },
       {
-        eventEmit: "visit-therapist",
-        eventTitle:
+        buttonEmit: "emit-message",
+        buttonTitle:
           "Посетить терапевта для получения направления к узкому специалисту",
         isActive: true,
       },
       {
-        eventEmit: "visit-registation",
-        eventTitle: "Обратиться в регистратуру для записи к узкому специалисту",
+        buttonEmit: "emit-message",
+        buttonTitle:
+          "Обратиться в регистратуру для записи к узкому специалисту",
         isActive: true,
       },
       {
-        eventEmit: "visit-specialist",
-        eventTitle:
+        buttonEmit: "emit-message",
+        buttonTitle:
           "Посетить узкого специалиста для подтверждения диагноза / необходимость льготного лекарства",
         isActive: true,
       },
       {
-        eventEmit: "call",
-        eventTitle:
+        buttonEmit: "emit-call",
+        buttonTitle:
           "Обратиться в службу 666 чтобы выписали рецепт на льготное лекарство",
         isActive: true,
       },
       {
-        eventEmit: "visit-pharmacy",
-        eventTitle: "Обратиться в аптеку для получения льготного лекарства",
+        buttonEmit: "visit-pharmacy",
+        buttonTitle: "Обратиться в аптеку для получения льготного лекарства",
         isActive: true,
       },
     ],
@@ -303,43 +306,44 @@ export const roles: GameRole[] = [
     roleDescription: "Никакой",
     roleCondition: '"Никакой"',
     roleImg: "/images/patient.png",
-    roleEvents: [
+    roleButtons: [
       {
-        eventEmit: "chat-bot",
-        eventTitle: "Записаться на прием к терапевту через чат-бот",
+        buttonEmit: "chat-bot",
+        buttonTitle: "Записаться на прием к терапевту через чат-бот",
         isActive: true,
       },
       {
-        eventEmit: "cite-registratura",
-        eventTitle: "Записаться на прием к врачу на сайте «Регистратура»",
+        buttonEmit: "cite-registratura",
+        buttonTitle: "Записаться на прием к врачу на сайте «Регистратура»",
         isActive: true,
       },
       {
-        eventEmit: "visit-therapist",
-        eventTitle:
+        buttonEmit: "emit-message",
+        buttonTitle:
           "Посетить терапевта для получения направления к узкому специалисту",
         isActive: true,
       },
       {
-        eventEmit: "visit-registation",
-        eventTitle: "Обратиться в регистратуру для записи к узкому специалисту",
+        buttonEmit: "emit-message",
+        buttonTitle:
+          "Обратиться в регистратуру для записи к узкому специалисту",
         isActive: true,
       },
       {
-        eventEmit: "visit-specialist",
-        eventTitle:
+        buttonEmit: "emit-message",
+        buttonTitle:
           "Посетить узкого специалиста для подтверждения диагноза / необходимость льготного лекарства",
         isActive: true,
       },
       {
-        eventEmit: "call",
-        eventTitle:
+        buttonEmit: "emit-call",
+        buttonTitle:
           "Обратиться в службу 666 чтобы выписали рецепт на льготное лекарство",
         isActive: true,
       },
       {
-        eventEmit: "visit-pharmacy",
-        eventTitle: "Обратиться в аптеку для получения льготного лекарства",
+        buttonEmit: "visit-pharmacy",
+        buttonTitle: "Обратиться в аптеку для получения льготного лекарства",
         isActive: true,
       },
     ],
@@ -356,43 +360,44 @@ export const roles: GameRole[] = [
     roleDescription: "Никакой",
     roleCondition: '"Никакой"',
     roleImg: "/images/patient.png",
-    roleEvents: [
+    roleButtons: [
       {
-        eventEmit: "chat-bot",
-        eventTitle: "Записаться на прием к терапевту через чат-бот",
+        buttonEmit: "chat-bot",
+        buttonTitle: "Записаться на прием к терапевту через чат-бот",
         isActive: true,
       },
       {
-        eventEmit: "cite-registratura",
-        eventTitle: "Записаться на прием к врачу на сайте «Регистратура»",
+        buttonEmit: "cite-registratura",
+        buttonTitle: "Записаться на прием к врачу на сайте «Регистратура»",
         isActive: true,
       },
       {
-        eventEmit: "visit-therapist",
-        eventTitle:
+        buttonEmit: "emit-message",
+        buttonTitle:
           "Посетить терапевта для получения направления к узкому специалисту",
         isActive: true,
       },
       {
-        eventEmit: "visit-registation",
-        eventTitle: "Обратиться в регистратуру для записи к узкому специалисту",
+        buttonEmit: "emit-message",
+        buttonTitle:
+          "Обратиться в регистратуру для записи к узкому специалисту",
         isActive: true,
       },
       {
-        eventEmit: "visit-specialist",
-        eventTitle:
+        buttonEmit: "emit-message",
+        buttonTitle:
           "Посетить узкого специалиста для подтверждения диагноза / необходимость льготного лекарства",
         isActive: true,
       },
       {
-        eventEmit: "call",
-        eventTitle:
+        buttonEmit: "emit-call",
+        buttonTitle:
           "Обратиться в службу 666 чтобы выписали рецепт на льготное лекарство",
         isActive: true,
       },
       {
-        eventEmit: "visit-pharmacy",
-        eventTitle: "Обратиться в аптеку для получения льготного лекарства",
+        buttonEmit: "visit-pharmacy",
+        buttonTitle: "Обратиться в аптеку для получения льготного лекарства",
         isActive: true,
       },
     ],
@@ -409,43 +414,44 @@ export const roles: GameRole[] = [
     roleDescription: "Никакой",
     roleCondition: '"Никакой"',
     roleImg: "/images/patient.png",
-    roleEvents: [
+    roleButtons: [
       {
-        eventEmit: "chat-bot",
-        eventTitle: "Записаться на прием к терапевту через чат-бот",
+        buttonEmit: "chat-bot",
+        buttonTitle: "Записаться на прием к терапевту через чат-бот",
         isActive: true,
       },
       {
-        eventEmit: "cite-registratura",
-        eventTitle: "Записаться на прием к врачу на сайте «Регистратура»",
+        buttonEmit: "cite-registratura",
+        buttonTitle: "Записаться на прием к врачу на сайте «Регистратура»",
         isActive: true,
       },
       {
-        eventEmit: "visit-therapist",
-        eventTitle:
+        buttonEmit: "emit-message",
+        buttonTitle:
           "Посетить терапевта для получения направления к узкому специалисту",
         isActive: true,
       },
       {
-        eventEmit: "visit-registation",
-        eventTitle: "Обратиться в регистратуру для записи к узкому специалисту",
+        buttonEmit: "emit-message",
+        buttonTitle:
+          "Обратиться в регистратуру для записи к узкому специалисту",
         isActive: true,
       },
       {
-        eventEmit: "visit-specialist",
-        eventTitle:
+        buttonEmit: "emit-message",
+        buttonTitle:
           "Посетить узкого специалиста для подтверждения диагноза / необходимость льготного лекарства",
         isActive: true,
       },
       {
-        eventEmit: "call",
-        eventTitle:
+        buttonEmit: "emit-call",
+        buttonTitle:
           "Обратиться в службу 666 чтобы выписали рецепт на льготное лекарство",
         isActive: true,
       },
       {
-        eventEmit: "visit-pharmacy",
-        eventTitle: "Обратиться в аптеку для получения льготного лекарства",
+        buttonEmit: "visit-pharmacy",
+        buttonTitle: "Обратиться в аптеку для получения льготного лекарства",
         isActive: true,
       },
     ],
@@ -462,43 +468,44 @@ export const roles: GameRole[] = [
     roleDescription: "Никакой",
     roleCondition: '"Никакой"',
     roleImg: "/images/patient.png",
-    roleEvents: [
+    roleButtons: [
       {
-        eventEmit: "chat-bot",
-        eventTitle: "Записаться на прием к терапевту через чат-бот",
+        buttonEmit: "chat-bot",
+        buttonTitle: "Записаться на прием к терапевту через чат-бот",
         isActive: true,
       },
       {
-        eventEmit: "cite-registratura",
-        eventTitle: "Записаться на прием к врачу на сайте «Регистратура»",
+        buttonEmit: "cite-registratura",
+        buttonTitle: "Записаться на прием к врачу на сайте «Регистратура»",
         isActive: true,
       },
       {
-        eventEmit: "visit-therapist",
-        eventTitle:
+        buttonEmit: "emit-message",
+        buttonTitle:
           "Посетить терапевта для получения направления к узкому специалисту",
         isActive: true,
       },
       {
-        eventEmit: "visit-registation",
-        eventTitle: "Обратиться в регистратуру для записи к узкому специалисту",
+        buttonEmit: "emit-message",
+        buttonTitle:
+          "Обратиться в регистратуру для записи к узкому специалисту",
         isActive: true,
       },
       {
-        eventEmit: "visit-specialist",
-        eventTitle:
+        buttonEmit: "emit-message",
+        buttonTitle:
           "Посетить узкого специалиста для подтверждения диагноза / необходимость льготного лекарства",
         isActive: true,
       },
       {
-        eventEmit: "call",
-        eventTitle:
+        buttonEmit: "emit-call",
+        buttonTitle:
           "Обратиться в службу 666 чтобы выписали рецепт на льготное лекарство",
         isActive: true,
       },
       {
-        eventEmit: "visit-pharmacy",
-        eventTitle: "Обратиться в аптеку для получения льготного лекарства",
+        buttonEmit: "visit-pharmacy",
+        buttonTitle: "Обратиться в аптеку для получения льготного лекарства",
         isActive: true,
       },
     ],
