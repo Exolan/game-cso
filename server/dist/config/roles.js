@@ -12,6 +12,7 @@ exports.roles = [
         roleDescription: "Хирург с невероятной точностью. Диагностирует болезни по малейшим симптомам.",
         roleImg: "/images/therapist.png",
         roleEvents: [],
+        roleMessages: [],
         isSelected: false,
     },
     {
@@ -102,6 +103,7 @@ exports.roles = [
                 eventImage: "/images/clip.png",
             },
         ],
+        roleMessages: [],
         isSelected: false,
     },
     {
@@ -113,6 +115,7 @@ exports.roles = [
         roleTask: "",
         roleDescription: "Гений медицинских технологий. Создает инновационные методы лечения.",
         roleImg: "/images/specialist.png",
+        roleMessages: [],
         roleEvents: [],
         isSelected: false,
     },
@@ -163,6 +166,7 @@ exports.roles = [
                 isActive: true,
             },
         ],
+        roleMessages: [],
         isSelected: false,
     },
     {
@@ -212,6 +216,7 @@ exports.roles = [
                 isActive: true,
             },
         ],
+        roleMessages: [],
         isSelected: false,
     },
     {
@@ -261,6 +266,7 @@ exports.roles = [
                 isActive: true,
             },
         ],
+        roleMessages: [],
         isSelected: false,
     },
     {
@@ -310,6 +316,7 @@ exports.roles = [
                 isActive: true,
             },
         ],
+        roleMessages: [],
         isSelected: false,
     },
     {
@@ -359,6 +366,7 @@ exports.roles = [
                 isActive: true,
             },
         ],
+        roleMessages: [],
         isSelected: false,
     },
     {
@@ -408,6 +416,7 @@ exports.roles = [
                 isActive: true,
             },
         ],
+        roleMessages: [],
         isSelected: false,
     },
     {
@@ -457,6 +466,7 @@ exports.roles = [
                 isActive: true,
             },
         ],
+        roleMessages: [],
         isSelected: false,
     },
 ];

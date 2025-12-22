@@ -114,6 +114,8 @@ export const roles: GameRole[] = [
         buttonImage: "/images/clip.png",
       },
     ],
+    roleMessages: [],
+
     isSelected: false,
   },
 
@@ -185,6 +187,8 @@ export const roles: GameRole[] = [
         isActive: true,
       },
     ],
+    roleMessages: [],
+
     isSelected: false,
   },
 
@@ -239,6 +243,8 @@ export const roles: GameRole[] = [
         isActive: true,
       },
     ],
+    roleMessages: [],
+
     isSelected: false,
   },
 
@@ -293,6 +299,8 @@ export const roles: GameRole[] = [
         isActive: true,
       },
     ],
+    roleMessages: [],
+
     isSelected: false,
   },
 
@@ -347,6 +355,8 @@ export const roles: GameRole[] = [
         isActive: true,
       },
     ],
+    roleMessages: [],
+
     isSelected: false,
   },
 
@@ -401,6 +411,8 @@ export const roles: GameRole[] = [
         isActive: true,
       },
     ],
+    roleMessages: [],
+
     isSelected: false,
   },
 
@@ -455,6 +467,8 @@ export const roles: GameRole[] = [
         isActive: true,
       },
     ],
+    roleMessages: [],
+
     isSelected: false,
   },
 
@@ -509,6 +523,8 @@ export const roles: GameRole[] = [
         isActive: true,
       },
     ],
+    roleMessages: [],
+
     isSelected: false,
   },
 ];
