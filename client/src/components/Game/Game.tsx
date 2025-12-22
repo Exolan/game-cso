@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { LobbyPlayer } from "../../types";
+import { Player } from "../../types";
 import { socket } from "../../socket";
 
 import styles from "./styles.module.css";
@@ -9,7 +9,7 @@ import LoadingPage from "../LoadingPage/LoadingPage";
 
 const Game: React.FC = () => {
   const [isActionsModal, setIsActionsModal] = useState<boolean>(false);
-  const [playerData, setPlayerData] = useState<LobbyPlayer | null>(null);
+  const [playerData, setPlayerData] = useState<Player | null>(null);
   const [count, setCount] = useState<number>(0);
   const [events, setEvents] = useState([]);
 
@@ -31,18 +31,18 @@ const Game: React.FC = () => {
     setIsActionsModal(true);
   };
 
-  const countTasks = (newPlayerData: LobbyPlayer): void => {
+  const countTasks = (newPlayerData: Player): void => {
     let newCount = 0;
-    const roleEvents = newPlayerData.playerRole?.roleEvents;
+    const roleButtons = newPlayerData.playerRole?.roleButtons;
 
-    if (!roleEvents) {
+    if (!roleButtons) {
       setCount(0);
       return;
     }
 
-    for (const event of roleEvents) {
-      if (event.eventData) {
-        newCount += event.eventData.length;
+    for (const button of roleButtons) {
+      if (button.buttonData) {
+        newCount += button.buttonData.length;
       }
     }
 
@@ -58,7 +58,7 @@ const Game: React.FC = () => {
       socket.emit("getPlayerData", playerId);
     }
 
-    const handlePlayerData = (newPlayerData: LobbyPlayer) => {
+    const handlePlayerData = (newPlayerData: Player) => {
       setPlayerData(newPlayerData);
 
       if (newPlayerData?.playerId) {

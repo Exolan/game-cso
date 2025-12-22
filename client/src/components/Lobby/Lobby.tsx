@@ -3,10 +3,10 @@ import { socket } from "../../socket";
 import PlayerCard from "../PlayerCard/PlayerCard";
 
 import styles from "./styles.module.css";
-import { LobbyPlayer } from "../../types";
+import { Player } from "../../types";
 
 const Lobby: React.FC = () => {
-  const [players, setPlayers] = useState<LobbyPlayer[]>([]);
+  const [players, setPlayers] = useState<Player[]>([]);
   const [isReady, setIsReady] = useState<boolean>(false);
 
   const onReady = () => {
@@ -15,7 +15,7 @@ const Lobby: React.FC = () => {
   };
 
   useEffect(() => {
-    const onLobbyUpdate = (players: LobbyPlayer[]): void => setPlayers(players);
+    const onLobbyUpdate = (players: Player[]): void => setPlayers(players);
 
     socket.on("lobbyUpdate", onLobbyUpdate);
     socket.emit("getLobby");

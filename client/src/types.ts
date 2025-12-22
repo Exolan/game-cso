@@ -1,8 +1,9 @@
-export interface LobbyPlayer {
-  playerSocket: string;
+export type GamePhase = "lobby" | "cards" | "game";
+
+export interface Player {
   playerId: number;
-  playerRole?: GameRole;
   isReady: boolean;
+  playerRole?: GameRole;
 }
 
 export interface GameRole {
@@ -15,29 +16,29 @@ export interface GameRole {
   roleProfile: string;
   roleTask: string;
   roleImg: string;
-  roleEvents: RoleEvent[];
+  roleButtons: RoleButton[];
   isSelected: boolean;
 }
 
-export interface RoleEvent {
-  eventEmit: string;
-  eventTitle: string;
-  eventDesc?: string;
+export interface RoleButton {
+  buttonEmit: string;
+  buttonTitle: string;
+  buttonDesc?: string;
   isActive: boolean;
-  eventData?: EventData[];
-  eventImage?: string;
+  buttonData?: ButtonData[];
+  buttonImage?: string;
+}
+
+export interface ButtonData {
+  dataTitle: string;
+  dataText: string;
+  dataImg?: string;
+  isActive: boolean;
 }
 
 export interface GameEvent {
   eventId: number;
   eventType: "call" | "message" | "dialog" | "minigame";
   eventData: any;
-  isActive: boolean;
-}
-
-export interface EventData {
-  dataTitle: string;
-  dataText: string;
-  dataImg?: string;
   isActive: boolean;
 }

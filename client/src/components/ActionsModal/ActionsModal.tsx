@@ -1,19 +1,19 @@
 import React, { useState } from "react";
-import { EventData, LobbyPlayer } from "../../types";
+import { ButtonData, Player } from "../../types";
 import EventModal from "../EventModal/EventModal";
 import PhoneModal from "../PhoneModal/PhoneModal";
 
 import styles from "./styles.module.css";
 
 const ActionsModal: React.FC<{
-  playerData: LobbyPlayer | null;
+  playerData: Player | null;
   setIsActionsModal: React.Dispatch<React.SetStateAction<boolean>>;
 }> = ({ playerData, setIsActionsModal }) => {
   const [isPhoneModal, setIsPhoneModal] = useState<boolean>(false);
   const [isEventModal, setIsEventModal] = useState<boolean>(false);
-  const [eventModalData, setEventModalData] = useState<EventData[]>([]);
+  const [eventModalData, setEventModalData] = useState<ButtonData[]>([]);
 
-  const openEventModal = (eventData: EventData[]): void => {
+  const openEventModal = (eventData: ButtonData[]): void => {
     setEventModalData(eventData);
     setIsEventModal(true);
   };
@@ -34,31 +34,31 @@ const ActionsModal: React.FC<{
             </button>
           </div>
           <div className={styles.modalButtons}>
-            {playerData?.playerRole?.roleEvents.map((button, index) => {
+            {playerData?.playerRole?.roleButtons.map((button, index) => {
               return (
                 button.isActive && (
                   <button
                     key={index}
                     onClick={() => {
-                      button.eventData
-                        ? openEventModal(button.eventData)
-                        : console.log("Запуск события", button.eventEmit);
+                      button.buttonData
+                        ? openEventModal(button.buttonData)
+                        : console.log("Запуск события", button.buttonEmit);
                     }}
                     className={styles.button}
                   >
                     <div className={styles.buttonTitle}>
-                      {button.eventImage && (
-                        <img src={button.eventImage} alt="" />
+                      {button.buttonImage && (
+                        <img src={button.buttonImage} alt="" />
                       )}
                       <h5>
-                        {button.eventData
-                          ? `${button.eventTitle} (${button.eventData?.length})`
-                          : button.eventTitle}
+                        {button.buttonData
+                          ? `${button.buttonTitle} (${button.buttonData?.length})`
+                          : button.buttonTitle}
                       </h5>
                     </div>
-                    {button.eventDesc && (
+                    {button.buttonDesc && (
                       <div className={styles.buttonDesc}>
-                        <p>{button.eventDesc}</p>
+                        <p>{button.buttonDesc}</p>
                       </div>
                     )}
                   </button>

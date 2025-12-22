@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 
 import styles from "./styles.module.css";
-import { EventData } from "../../types";
+import { ButtonData } from "../../types";
 
 const EventModal: React.FC<{
   setIsEventModal: React.Dispatch<React.SetStateAction<boolean>>;
-  eventModalData: EventData[];
+  eventModalData: ButtonData[];
 }> = ({ setIsEventModal, eventModalData }) => {
   useEffect(() => {
     if (eventModalData.length === 0) {
