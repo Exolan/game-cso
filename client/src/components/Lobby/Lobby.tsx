@@ -15,7 +15,10 @@ const Lobby: React.FC = () => {
   };
 
   useEffect(() => {
-    const onLobbyUpdate = (players: Player[]): void => setPlayers(players);
+    const onLobbyUpdate = (players: Player[]): void => {
+      setIsReady(false);
+      setPlayers(players);
+    };
 
     socket.on("lobbyUpdate", onLobbyUpdate);
     socket.emit("getLobby");
@@ -47,7 +50,7 @@ const Lobby: React.FC = () => {
             }
 
             return (
-              <div className={styles.socket} key={player.playerId}>
+              <div className={styles.socket} key={index}>
                 <PlayerCard
                   playerId={player.playerId}
                   isReady={player.isReady}
