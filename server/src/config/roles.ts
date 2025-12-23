@@ -32,75 +32,75 @@ export const roles: GameRole[] = [
         buttonTitle: "Обработать лист ожидания к узким специалистам",
         buttonDesc:
           "Вам необходимо записать пациентов из списка ожидания на приём к нужным им врачам. Ваша задача: для каждого пациента найти свободный слот в расписании его врача и занести туда данные.",
-        buttonData: [
-          {
-            dataTitle: "Анна Ветрова,\nк кардиологу",
-            dataText: "«Беспокоит шум в ушах при виде спиралей в метро»",
-            dataImg: "/images/event-icon 2.png",
-            isActive: false,
-          },
-          {
-            dataTitle: "Борис Громов,\nк неврологу",
-            dataText:
-              "«Жалуется, что забывает пароли ещё до того, как их придумал»",
-            dataImg: "/images/event-icon 5.png",
-            isActive: false,
-          },
-          {
-            dataTitle: "Василиса Цветкова,\nк дерматологу",
-            dataText:
-              "«Обнаружила, что кожа на локтях не совпадает по тону с новым айфоном»",
-            dataImg: "/images/event-icon 3.png",
-            isActive: false,
-          },
-          {
-            dataTitle: "Геннадий Стулов,\nк ортопеду",
-            dataText:
-              "«Уверен, что левая нога стала короче после обновления iOS»",
-            dataImg: "/images/event-icon 6.png",
-            isActive: false,
-          },
-          {
-            dataTitle: "Дарья Лучина,\nк офтальмологу",
-            dataText: "«Видятся рекламные баннеры на стенах в реальной жизни»",
-            dataImg: "/images/event-icon 7.png",
-            isActive: false,
-          },
-          {
-            dataTitle: "Егор Каменских,\nк гастроэнтерологу",
-            dataText:
-              "«Организм отказывается переваривать пищу без эмодзи в описании»",
-            dataImg: "/images/event-icon 1.png",
-            isActive: false,
-          },
-          {
-            dataTitle: "Злата Родникова,\nк эндокринологу",
-            dataText:
-              "«Подозревает, что уровень сахара падает при отрицательных лайках»",
-            dataImg: "/images/event-icon 10.png",
-            isActive: false,
-          },
-          {
-            dataTitle: "Игорь Белов,\nк отоларингологу",
-            dataText: "«Слышит уведомления от выключенных устройств»",
-            dataImg: "/images/event-icon 4.png",
-            isActive: false,
-          },
-          {
-            dataTitle: "Кира Солнечная,\nк психотерапевту",
-            dataText:
-              "«Требует выписать справку о несовместимости с офлайн-общением»",
-            dataImg: "/images/event-icon 8.png",
-            isActive: false,
-          },
-          {
-            dataTitle: "Леонид Онегин,\nк урологу",
-            dataText:
-              "«Жалуется на зависание процесса в самый неподходящий момент»",
-            dataImg: "/images/event-icon 9.png",
-            isActive: false,
-          },
-        ],
+        // buttonData: [
+        //   {
+        //     dataTitle: "Анна Ветрова,\nк кардиологу",
+        //     dataText: "«Беспокоит шум в ушах при виде спиралей в метро»",
+        //     dataImg: "/images/event-icon 2.png",
+        //     isActive: false,
+        //   },
+        //   {
+        //     dataTitle: "Борис Громов,\nк неврологу",
+        //     dataText:
+        //       "«Жалуется, что забывает пароли ещё до того, как их придумал»",
+        //     dataImg: "/images/event-icon 5.png",
+        //     isActive: false,
+        //   },
+        //   {
+        //     dataTitle: "Василиса Цветкова,\nк дерматологу",
+        //     dataText:
+        //       "«Обнаружила, что кожа на локтях не совпадает по тону с новым айфоном»",
+        //     dataImg: "/images/event-icon 3.png",
+        //     isActive: false,
+        //   },
+        //   {
+        //     dataTitle: "Геннадий Стулов,\nк ортопеду",
+        //     dataText:
+        //       "«Уверен, что левая нога стала короче после обновления iOS»",
+        //     dataImg: "/images/event-icon 6.png",
+        //     isActive: false,
+        //   },
+        //   {
+        //     dataTitle: "Дарья Лучина,\nк офтальмологу",
+        //     dataText: "«Видятся рекламные баннеры на стенах в реальной жизни»",
+        //     dataImg: "/images/event-icon 7.png",
+        //     isActive: false,
+        //   },
+        //   {
+        //     dataTitle: "Егор Каменских,\nк гастроэнтерологу",
+        //     dataText:
+        //       "«Организм отказывается переваривать пищу без эмодзи в описании»",
+        //     dataImg: "/images/event-icon 1.png",
+        //     isActive: false,
+        //   },
+        //   {
+        //     dataTitle: "Злата Родникова,\nк эндокринологу",
+        //     dataText:
+        //       "«Подозревает, что уровень сахара падает при отрицательных лайках»",
+        //     dataImg: "/images/event-icon 10.png",
+        //     isActive: false,
+        //   },
+        //   {
+        //     dataTitle: "Игорь Белов,\nк отоларингологу",
+        //     dataText: "«Слышит уведомления от выключенных устройств»",
+        //     dataImg: "/images/event-icon 4.png",
+        //     isActive: false,
+        //   },
+        //   {
+        //     dataTitle: "Кира Солнечная,\nк психотерапевту",
+        //     dataText:
+        //       "«Требует выписать справку о несовместимости с офлайн-общением»",
+        //     dataImg: "/images/event-icon 8.png",
+        //     isActive: false,
+        //   },
+        //   {
+        //     dataTitle: "Леонид Онегин,\nк урологу",
+        //     dataText:
+        //       "«Жалуется на зависание процесса в самый неподходящий момент»",
+        //     dataImg: "/images/event-icon 9.png",
+        //     isActive: false,
+        //   },
+        // ],
         isActive: true,
         buttonImage: "/images/list.png",
       },
@@ -109,7 +109,7 @@ export const roles: GameRole[] = [
         buttonTitle: "Подшить результаты анализов в карты пациентов",
         buttonDesc:
           "Вам нужно корректно распределить результаты анализов по картам пациентов. Для этого перетащите каждый анализ в соответствующую папку.",
-        buttonData: Array.from({ length: 8 }),
+        // buttonData: Array.from({ length: 8 }),
         isActive: true,
         buttonImage: "/images/clip.png",
       },
@@ -167,6 +167,16 @@ export const roles: GameRole[] = [
         buttonTitle:
           "Обратиться в регистратуру для записи к узкому специалисту",
         isActive: true,
+        buttonData: {
+          eventRecepient: "registratura",
+          eventData: {
+            dataText: "Пациент ждет у окна регистратуры",
+            dataButtons: [
+              { buttonText: "Обслужить сейчас", buttonEmit: "emit-dialog" },
+              { buttonText: "Поставить в очередь", buttonEmit: "emit-queue" },
+            ],
+          },
+        },
       },
       {
         buttonEmit: "emit-message",

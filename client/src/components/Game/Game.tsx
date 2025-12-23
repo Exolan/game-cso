@@ -31,24 +31,6 @@ const Game: React.FC = () => {
     setIsActionsModal(true);
   };
 
-  const countTasks = (newPlayerData: Player): void => {
-    let newCount = 0;
-    const roleButtons = newPlayerData.playerRole?.roleButtons;
-
-    if (!roleButtons) {
-      setCount(0);
-      return;
-    }
-
-    for (const button of roleButtons) {
-      if (button.buttonData) {
-        newCount += button.buttonData.length;
-      }
-    }
-
-    setCount(newCount);
-  };
-
   useEffect(() => {
     const playerId = getLocalStorage();
 
@@ -64,8 +46,6 @@ const Game: React.FC = () => {
       if (newPlayerData?.playerId) {
         createLocalStorage(newPlayerData.playerId);
       }
-
-      countTasks(newPlayerData);
     };
 
     socket.on("sendPlayerData", handlePlayerData);

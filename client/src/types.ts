@@ -1,5 +1,9 @@
 export type GamePhase = "lobby" | "cards" | "game";
 
+export type EmitType = "call" | "message" | "minigame" | "queue" | "dialog";
+
+export type Role = "therapist" | "patient" | "specialist" | "registratura";
+
 export interface Player {
   playerId: number;
   isReady: boolean;
@@ -25,20 +29,21 @@ export interface RoleButton {
   buttonTitle: string;
   buttonDesc?: string;
   isActive: boolean;
-  buttonData?: ButtonData[];
+  buttonData?: GameEvent;
   buttonImage?: string;
 }
 
-export interface ButtonData {
-  dataTitle: string;
-  dataText: string;
-  dataImg?: string;
-  isActive: boolean;
+export interface GameEvent {
+  eventData: EventData;
+  eventRecepient: Role;
 }
 
-export interface GameEvent {
-  eventId: number;
-  eventType: "call" | "message" | "dialog" | "minigame";
-  eventData: any;
-  isActive: boolean;
+export interface EventData {
+  dataText: string;
+  dataButtons: EventButton[];
+}
+
+export interface EventButton {
+  buttonText: string;
+  buttonEmit: string;
 }

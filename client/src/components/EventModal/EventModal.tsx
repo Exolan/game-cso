@@ -1,14 +1,14 @@
 import React, { useEffect } from "react";
 
 import styles from "./styles.module.css";
-import { ButtonData } from "../../types";
+import { EventData } from "../../types";
 
 const EventModal: React.FC<{
   setIsEventModal: React.Dispatch<React.SetStateAction<boolean>>;
-  eventModalData: ButtonData[];
+  eventModalData: EventData;
 }> = ({ setIsEventModal, eventModalData }) => {
   useEffect(() => {
-    if (eventModalData.length === 0) {
+    if (!eventModalData) {
       return;
     }
   }, [eventModalData]);
@@ -28,27 +28,21 @@ const EventModal: React.FC<{
           </button>
         </div>
         <div className={styles.modalButtons}>
-          {eventModalData.map((button, index) => {
+          {eventModalData.dataButtons.map((button, index) => {
             return (
-              !button?.isActive && (
-                <button
-                  key={index}
-                  onClick={() => {
-                    console.log("Запуск события");
-                  }}
-                  className={styles.button}
-                >
-                  <div className={styles.buttonTitle}>
-                    {button?.dataImg && <img src={button?.dataImg} alt="" />}
-                    <h5>{button?.dataTitle}</h5>
+              <button
+                key={index}
+                onClick={() => {
+                  console.log("Запуск события");
+                }}
+                className={styles.button}
+              >
+                {button?.buttonText && (
+                  <div className={styles.buttonDesc}>
+                    <p>{button?.buttonText}</p>
                   </div>
-                  {button?.dataText && (
-                    <div className={styles.buttonDesc}>
-                      <p>{button?.dataText}</p>
-                    </div>
-                  )}
-                </button>
-              )
+                )}
+              </button>
             );
           })}
         </div>

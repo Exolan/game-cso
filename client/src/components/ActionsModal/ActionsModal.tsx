@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ButtonData, Player } from "../../types";
+import { EventData, Player } from "../../types";
 import EventModal from "../EventModal/EventModal";
 import PhoneModal from "../PhoneModal/PhoneModal";
 
@@ -11,9 +11,9 @@ const ActionsModal: React.FC<{
 }> = ({ playerData, setIsActionsModal }) => {
   const [isPhoneModal, setIsPhoneModal] = useState<boolean>(false);
   const [isEventModal, setIsEventModal] = useState<boolean>(false);
-  const [eventModalData, setEventModalData] = useState<ButtonData[]>([]);
+  const [eventModalData, setEventModalData] = useState<EventData | null>(null);
 
-  const openEventModal = (eventData: ButtonData[]): void => {
+  const openEventModal = (eventData: EventData): void => {
     setEventModalData(eventData);
     setIsEventModal(true);
   };
@@ -40,9 +40,7 @@ const ActionsModal: React.FC<{
                   <button
                     key={index}
                     onClick={() => {
-                      button.buttonData
-                        ? openEventModal(button.buttonData)
-                        : console.log("Запуск события", button.buttonEmit);
+                      console.log("Запуск события", button.buttonEmit);
                     }}
                     className={styles.button}
                   >
@@ -50,11 +48,7 @@ const ActionsModal: React.FC<{
                       {button.buttonImage && (
                         <img src={button.buttonImage} alt="" />
                       )}
-                      <h5>
-                        {button.buttonData
-                          ? `${button.buttonTitle} (${button.buttonData?.length})`
-                          : button.buttonTitle}
-                      </h5>
+                      <h5>{button.buttonTitle}</h5>
                     </div>
                     {button.buttonDesc && (
                       <div className={styles.buttonDesc}>
