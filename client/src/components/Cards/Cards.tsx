@@ -14,8 +14,6 @@ const Cards: React.FC = () => {
     socket.emit("getRoles");
 
     const handleRolesUpdate = (roles: GameRole[]): void => {
-      console.log(roles);
-
       setRoles(roles);
     };
 

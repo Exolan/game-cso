@@ -52,6 +52,10 @@ const AppContent: React.FC = () => {
     }
 
     function handleChangeGamePhase(newGamePhase: string): void {
+      // Очистка localStorage при переходе на выбор карт (избавление от сохранения данных в localStorage после прошлой игры)
+      if (newGamePhase === "cards") {
+        localStorage.removeItem("playerId");
+      }
       navigate("/" + newGamePhase);
     }
 
