@@ -90,6 +90,9 @@ var SocketHandlers = /** @class */ (function () {
             try {
                 if (_this.game.gamePhase === "game" && playerId === null) {
                     socket.emit("errorMessage", "Ошибка подключения. Игра уже началась");
+                    logger_1.default.info("Подключился новый игрок, но игра уже началась", {
+                        socket: socket.id,
+                    });
                     return;
                 }
                 if (_this.game.players.size < _this.game.maxPlayers) {
