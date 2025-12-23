@@ -1,6 +1,7 @@
 import { Server, Socket } from "socket.io";
 import { Game } from "src/models/Game";
 import Logger from "../utils/logger";
+import { GameEvent } from "src/types/types";
 
 export class SocketHandlers {
   private readonly io: Server;
@@ -19,6 +20,7 @@ export class SocketHandlers {
     this.onGetRoles(socket);
     this.onSelectRole(socket);
     this.onGetPlayerData(socket);
+    this.onCreateMessage(socket);
   }
 
   private emitLobbyUpdate(): void {
@@ -40,6 +42,45 @@ export class SocketHandlers {
 
   private onGetLobby(socket: Socket): void {
     socket.on("getLobby", () => this.emitLobbyUpdate());
+  }
+
+  private onCreateMessage(socket: Socket): void {
+    socket.on("createMessage", (data: GameEvent) => {
+      try {
+        if (!data) {
+          return;
+        }
+
+        if (!data.eventRecepient) {
+          return;
+        }
+
+        const players = this.game.players;
+
+        players.forEach((player, socketId) => {
+          if (player.playerRole?.roleId === data.eventRecepient) {
+            const playerMessages = this.game.messages.get(socketId);
+
+            if (playerMessages) {
+              playerMessages.push(data.eventData);
+            } else {
+              this.game.messages.set(socketId, [data.eventData]);
+            }
+
+            Logger.info(`Отправка сообщения пользователю с ролью: ${socketId}`);
+            this.io
+              .to(socketId)
+              .emit("sendMessage", this.game.messages.get(socketId));
+
+            return;
+          }
+        });
+      } catch (error) {
+        Logger.error("Ошибка создания сообщения", error, {
+          socketId: socket.id,
+        });
+      }
+    });
   }
 
   private onSelectRole(socket: Socket): void {

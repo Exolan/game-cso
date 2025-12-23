@@ -2,8 +2,6 @@ export type GamePhase = "lobby" | "cards" | "game";
 
 export type EmitType = "call" | "message" | "minigame" | "queue" | "dialog";
 
-export type Role = "therapist" | "patient" | "specialist" | "registratura";
-
 export interface Player {
   playerId: number;
   isReady: boolean;
@@ -35,7 +33,7 @@ export interface RoleButton {
 
 export interface GameEvent {
   eventData: EventData;
-  eventRecepient: Role;
+  eventRecepient: number;
 }
 
 export interface EventData {

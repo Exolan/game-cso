@@ -1,4 +1,10 @@
-import { GamePhase, GameRole, Player, GameEvent } from "src/types/types";
+import {
+  GamePhase,
+  GameRole,
+  Player,
+  GameEvent,
+  EventData,
+} from "src/types/types";
 import { roles } from "../config/roles";
 
 export class Game {
@@ -8,6 +14,7 @@ export class Game {
   public maxPlayers: number;
   public roles: GameRole[];
   public events: Map<string, GameEvent>;
+  public messages: Map<string, EventData[]>;
 
   constructor() {
     this.players = new Map();
@@ -16,6 +23,7 @@ export class Game {
     this.maxPlayers = 10;
     this.roles = [];
     this.events = new Map();
+    this.messages = new Map();
   }
 
   private initializeRoles(countPlayers: number): void {

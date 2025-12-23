@@ -5,7 +5,7 @@ import { EventData } from "../../types";
 
 const EventModal: React.FC<{
   setIsEventModal: React.Dispatch<React.SetStateAction<boolean>>;
-  eventModalData: EventData;
+  eventModalData: EventData[];
 }> = ({ setIsEventModal, eventModalData }) => {
   useEffect(() => {
     if (!eventModalData) {
@@ -28,7 +28,7 @@ const EventModal: React.FC<{
           </button>
         </div>
         <div className={styles.modalButtons}>
-          {eventModalData.dataButtons.map((button, index) => {
+          {eventModalData.map((button, index) => {
             return (
               <button
                 key={index}
@@ -37,9 +37,9 @@ const EventModal: React.FC<{
                 }}
                 className={styles.button}
               >
-                {button?.buttonText && (
+                {button.dataText && (
                   <div className={styles.buttonDesc}>
-                    <p>{button?.buttonText}</p>
+                    <p>{button.dataText}</p>
                   </div>
                 )}
               </button>

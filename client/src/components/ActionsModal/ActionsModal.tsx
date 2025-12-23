@@ -4,17 +4,21 @@ import EventModal from "../EventModal/EventModal";
 import PhoneModal from "../PhoneModal/PhoneModal";
 
 import styles from "./styles.module.css";
+import { socket } from "../../socket";
 
 const ActionsModal: React.FC<{
   playerData: Player | null;
   setIsActionsModal: React.Dispatch<React.SetStateAction<boolean>>;
-}> = ({ playerData, setIsActionsModal }) => {
+  messages: EventData[];
+}> = ({ playerData, setIsActionsModal, messages }) => {
   const [isPhoneModal, setIsPhoneModal] = useState<boolean>(false);
   const [isEventModal, setIsEventModal] = useState<boolean>(false);
-  const [eventModalData, setEventModalData] = useState<EventData | null>(null);
+  const [eventModalData, setEventModalData] = useState<EventData[] | null>(
+    null
+  );
 
-  const openEventModal = (eventData: EventData): void => {
-    setEventModalData(eventData);
+  const openEventModal = (eventsData: EventData[]): void => {
+    setEventModalData(eventsData);
     setIsEventModal(true);
   };
 
@@ -41,6 +45,8 @@ const ActionsModal: React.FC<{
                     key={index}
                     onClick={() => {
                       console.log("Запуск события", button.buttonEmit);
+
+                      socket.emit(button.buttonEmit, button.buttonData);
                     }}
                     className={styles.button}
                   >
@@ -72,12 +78,12 @@ const ActionsModal: React.FC<{
             </button>
           </div>
           <div className={styles.actionMessage}>
-            <button className={styles.messageButton}>
+            <button
+              className={styles.messageButton}
+              onClick={() => openEventModal(messages)}
+            >
               <p className={styles.buttonText}>Сообщения</p>
-              <span className={styles.buttonBadge}>0</span>
-              {/* {events.length > 0 && (
-                <span className={styles.buttonBadge}>{events.length}</span>
-              )} */}
+              <span className={styles.buttonBadge}>{messages.length}</span>
             </button>
           </div>
         </div>

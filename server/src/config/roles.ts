@@ -157,18 +157,18 @@ export const roles: GameRole[] = [
         isActive: true,
       },
       {
-        buttonEmit: "emit-message",
+        buttonEmit: "createMessage",
         buttonTitle:
           "Посетить терапевта для получения направления к узкому специалисту",
         isActive: true,
       },
       {
-        buttonEmit: "emit-message",
+        buttonEmit: "createMessage",
         buttonTitle:
           "Обратиться в регистратуру для записи к узкому специалисту",
         isActive: true,
         buttonData: {
-          eventRecepient: "registratura",
+          eventRecepient: 2,
           eventData: {
             dataText: "Пациент ждет у окна регистратуры",
             dataButtons: [
@@ -179,7 +179,7 @@ export const roles: GameRole[] = [
         },
       },
       {
-        buttonEmit: "emit-message",
+        buttonEmit: "createMessage",
         buttonTitle:
           "Посетить узкого специалиста для подтверждения диагноза / необходимость льготного лекарства",
         isActive: true,
@@ -222,19 +222,19 @@ export const roles: GameRole[] = [
         isActive: true,
       },
       {
-        buttonEmit: "emit-message",
+        buttonEmit: "createMessage",
         buttonTitle:
           "Посетить терапевта для получения направления к узкому специалисту",
         isActive: true,
       },
       {
-        buttonEmit: "emit-message",
+        buttonEmit: "createMessage",
         buttonTitle:
           "Обратиться в регистратуру для записи к узкому специалисту",
         isActive: true,
       },
       {
-        buttonEmit: "emit-message",
+        buttonEmit: "createMessage",
         buttonTitle:
           "Посетить узкого специалиста для подтверждения диагноза / необходимость льготного лекарства",
         isActive: true,
@@ -277,19 +277,19 @@ export const roles: GameRole[] = [
         isActive: true,
       },
       {
-        buttonEmit: "emit-message",
+        buttonEmit: "createMessage",
         buttonTitle:
           "Посетить терапевта для получения направления к узкому специалисту",
         isActive: true,
       },
       {
-        buttonEmit: "emit-message",
+        buttonEmit: "createMessage",
         buttonTitle:
           "Обратиться в регистратуру для записи к узкому специалисту",
         isActive: true,
       },
       {
-        buttonEmit: "emit-message",
+        buttonEmit: "createMessage",
         buttonTitle:
           "Посетить узкого специалиста для подтверждения диагноза / необходимость льготного лекарства",
         isActive: true,
@@ -332,19 +332,19 @@ export const roles: GameRole[] = [
         isActive: true,
       },
       {
-        buttonEmit: "emit-message",
+        buttonEmit: "createMessage",
         buttonTitle:
           "Посетить терапевта для получения направления к узкому специалисту",
         isActive: true,
       },
       {
-        buttonEmit: "emit-message",
+        buttonEmit: "createMessage",
         buttonTitle:
           "Обратиться в регистратуру для записи к узкому специалисту",
         isActive: true,
       },
       {
-        buttonEmit: "emit-message",
+        buttonEmit: "createMessage",
         buttonTitle:
           "Посетить узкого специалиста для подтверждения диагноза / необходимость льготного лекарства",
         isActive: true,
@@ -387,19 +387,19 @@ export const roles: GameRole[] = [
         isActive: true,
       },
       {
-        buttonEmit: "emit-message",
+        buttonEmit: "createMessage",
         buttonTitle:
           "Посетить терапевта для получения направления к узкому специалисту",
         isActive: true,
       },
       {
-        buttonEmit: "emit-message",
+        buttonEmit: "createMessage",
         buttonTitle:
           "Обратиться в регистратуру для записи к узкому специалисту",
         isActive: true,
       },
       {
-        buttonEmit: "emit-message",
+        buttonEmit: "createMessage",
         buttonTitle:
           "Посетить узкого специалиста для подтверждения диагноза / необходимость льготного лекарства",
         isActive: true,
@@ -442,19 +442,19 @@ export const roles: GameRole[] = [
         isActive: true,
       },
       {
-        buttonEmit: "emit-message",
+        buttonEmit: "createMessage",
         buttonTitle:
           "Посетить терапевта для получения направления к узкому специалисту",
         isActive: true,
       },
       {
-        buttonEmit: "emit-message",
+        buttonEmit: "createMessage",
         buttonTitle:
           "Обратиться в регистратуру для записи к узкому специалисту",
         isActive: true,
       },
       {
-        buttonEmit: "emit-message",
+        buttonEmit: "createMessage",
         buttonTitle:
           "Посетить узкого специалиста для подтверждения диагноза / необходимость льготного лекарства",
         isActive: true,
@@ -497,19 +497,19 @@ export const roles: GameRole[] = [
         isActive: true,
       },
       {
-        buttonEmit: "emit-message",
+        buttonEmit: "createMessage",
         buttonTitle:
           "Посетить терапевта для получения направления к узкому специалисту",
         isActive: true,
       },
       {
-        buttonEmit: "emit-message",
+        buttonEmit: "createMessage",
         buttonTitle:
           "Обратиться в регистратуру для записи к узкому специалисту",
         isActive: true,
       },
       {
-        buttonEmit: "emit-message",
+        buttonEmit: "createMessage",
         buttonTitle:
           "Посетить узкого специалиста для подтверждения диагноза / необходимость льготного лекарства",
         isActive: true,

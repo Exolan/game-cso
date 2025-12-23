@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Player } from "../../types";
+import { EventData, Player } from "../../types";
 import { socket } from "../../socket";
 
 import styles from "./styles.module.css";
@@ -11,7 +11,7 @@ const Game: React.FC = () => {
   const [isActionsModal, setIsActionsModal] = useState<boolean>(false);
   const [playerData, setPlayerData] = useState<Player | null>(null);
   const [count, setCount] = useState<number>(0);
-  const [events, setEvents] = useState([]);
+  const [messages, setMessages] = useState<EventData[]>([]);
 
   const getLocalStorage = (): number | null => {
     const item = localStorage.getItem("playerId");
@@ -31,6 +31,10 @@ const Game: React.FC = () => {
     setIsActionsModal(true);
   };
 
+  const countActiveEvent = (): void => {
+    setCount(messages.length);
+  };
+
   useEffect(() => {
     const playerId = getLocalStorage();
 
@@ -48,14 +52,22 @@ const Game: React.FC = () => {
       }
     };
 
+    const handleMessage = (newMessages: EventData[]) => {
+      setMessages(newMessages);
+    };
+
+    countActiveEvent();
+
     socket.on("sendPlayerData", handlePlayerData);
     socket.on("updatePlayerData", handlePlayerData);
+    socket.on("sendMessage", handleMessage);
 
     return () => {
       socket.off("sendPlayerData", handlePlayerData);
       socket.off("updatePlayerData", handlePlayerData);
+      socket.off("sendMessage", handleMessage);
     };
-  }, []);
+  }, [count]);
 
   return playerData ? (
     <div className={styles.conteiner}>
@@ -63,6 +75,7 @@ const Game: React.FC = () => {
         <ActionsModal
           playerData={playerData}
           setIsActionsModal={setIsActionsModal}
+          messages={messages}
         />
       )}
 
