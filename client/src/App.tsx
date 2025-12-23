@@ -29,11 +29,21 @@ const AppContent: React.FC = () => {
   function handleConnect(): void {
     if (socket.connected) {
       setIsConnected(true);
-      socket.emit("playerConnect");
+      socket.emit("playerConnect", getLocalStorage());
     } else {
       socket.connect();
     }
   }
+
+  const getLocalStorage = (): number | null => {
+    const item = localStorage.getItem("playerId");
+    if (item === null) {
+      return null;
+    }
+
+    const num = Number(item);
+    return isNaN(num) ? null : num;
+  };
 
   function handleError(message: string): void {
     setIsError(true);
@@ -43,7 +53,7 @@ const AppContent: React.FC = () => {
   useEffect(() => {
     function handleConnectEvent(): void {
       setIsConnected(true);
-      socket.emit("playerConnect");
+      socket.emit("playerConnect", getLocalStorage());
     }
 
     function handleDisconnect(): void {
@@ -63,10 +73,6 @@ const AppContent: React.FC = () => {
     socket.on("disconnect", handleDisconnect);
     socket.on("changeGamePhase", handleChangeGamePhase);
     socket.on("errorMessage", handleError);
-
-    if (socket.connected) {
-      handleConnectEvent();
-    }
 
     return () => {
       socket.off("connect", handleConnectEvent);

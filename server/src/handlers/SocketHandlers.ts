@@ -93,8 +93,17 @@ export class SocketHandlers {
   }
 
   private onPlayerConnect(socket: Socket): void {
-    socket.on("playerConnect", () => {
+    socket.on("playerConnect", (playerId: number | null) => {
       try {
+        if (this.game.gamePhase === "game" && playerId === null) {
+          socket.emit("errorMessage", "Ошибка подключения. Игра уже началась");
+
+          Logger.info("Подключился новый игрок, но игра уже началась", {
+            socket: socket.id,
+          });
+
+          return;
+        }
         if (this.game.players.size < this.game.maxPlayers) {
           const player = this.game.players.get(socket.id);
           if (player) {
