@@ -86,8 +86,12 @@ var SocketHandlers = /** @class */ (function () {
     };
     SocketHandlers.prototype.onPlayerConnect = function (socket) {
         var _this = this;
-        socket.on("playerConnect", function () {
+        socket.on("playerConnect", function (playerId) {
             try {
+                if (_this.game.gamePhase === "game" && playerId === null) {
+                    socket.emit("errorMessage", "Ошибка подключения. Игра уже началась");
+                    return;
+                }
                 if (_this.game.players.size < _this.game.maxPlayers) {
                     var player = _this.game.players.get(socket.id);
                     if (player) {
