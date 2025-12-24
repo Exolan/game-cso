@@ -54,9 +54,8 @@ const Game: React.FC = () => {
 
     const handleMessage = (newMessages: EventData[]) => {
       setMessages(newMessages);
+      countActiveEvent();
     };
-
-    countActiveEvent();
 
     socket.on("sendPlayerData", handlePlayerData);
     socket.on("updatePlayerData", handlePlayerData);
@@ -164,7 +163,7 @@ const Game: React.FC = () => {
         <div className={styles.buttonBlock}>
           <button className={styles.button} onClick={() => onOpen()}>
             <h4 className={styles.buttonText}>перейти к действиям</h4>
-            <span className={styles.buttonBadge}>{count}</span>
+            {count !== 0 && <span className={styles.buttonBadge}>{count}</span>}
           </button>
         </div>
       </div>
