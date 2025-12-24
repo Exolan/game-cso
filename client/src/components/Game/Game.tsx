@@ -67,7 +67,7 @@ const Game: React.FC = () => {
       socket.off("updatePlayerData", handlePlayerData);
       socket.off("sendMessage", handleMessage);
     };
-  }, [count]);
+  }, [messages]);
 
   return playerData ? (
     <div className={styles.conteiner}>

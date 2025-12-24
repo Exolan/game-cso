@@ -5,6 +5,7 @@ import PhoneModal from "../PhoneModal/PhoneModal";
 
 import styles from "./styles.module.css";
 import { socket } from "../../socket";
+import MessagesModal from "../MessagesModal/MessagesModal";
 
 const ActionsModal: React.FC<{
   playerData: Player | null;
@@ -13,6 +14,7 @@ const ActionsModal: React.FC<{
 }> = ({ playerData, setIsActionsModal, messages }) => {
   const [isPhoneModal, setIsPhoneModal] = useState<boolean>(false);
   const [isEventModal, setIsEventModal] = useState<boolean>(false);
+  const [isMessagesModal, setIsMessagesModal] = useState<boolean>(false);
   const [eventModalData, setEventModalData] = useState<EventData[] | null>(
     null
   );
@@ -20,6 +22,10 @@ const ActionsModal: React.FC<{
   const openEventModal = (eventsData: EventData[]): void => {
     setEventModalData(eventsData);
     setIsEventModal(true);
+  };
+
+  const openMessagesModal = (): void => {
+    setIsMessagesModal(true);
   };
 
   return (
@@ -80,7 +86,7 @@ const ActionsModal: React.FC<{
           <div className={styles.actionMessage}>
             <button
               className={styles.messageButton}
-              onClick={() => openEventModal(messages)}
+              onClick={() => openMessagesModal()}
             >
               <p className={styles.buttonText}>Сообщения</p>
               <span className={styles.buttonBadge}>{messages.length}</span>
@@ -88,6 +94,13 @@ const ActionsModal: React.FC<{
           </div>
         </div>
       </div>
+
+      {isMessagesModal && (
+        <MessagesModal
+          setIsMessagesModal={setIsMessagesModal}
+          messages={messages}
+        />
+      )}
 
       {isPhoneModal && <PhoneModal setIsPhoneModal={setIsPhoneModal} />}
 

@@ -44,4 +44,5 @@ export interface EventData {
 export interface EventButton {
   buttonText: string;
   buttonEmit: string;
+  buttonDesc?: string;
 }
