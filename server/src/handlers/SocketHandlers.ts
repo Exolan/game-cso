@@ -67,7 +67,10 @@ export class SocketHandlers {
               this.game.messages.set(socketId, [data.eventData]);
             }
 
-            Logger.info(`Отправка сообщения пользователю с ролью: ${socketId}`);
+            Logger.info(
+              `Отправка сообщения пользователю с ролью: ${data.eventRecepient}`,
+              { playerMessages }
+            );
             this.io
               .to(socketId)
               .emit("sendMessage", this.game.messages.get(socketId));
